@@ -1,0 +1,1295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ediproof — Wireframes (A / B)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --a-bg: #07070c;
+    --a-panel: rgba(22, 18, 40, 0.55);
+    --a-grid: rgba(120, 90, 255, 0.08);
+    --a-pink: #ff4dd2;
+    --a-purple: #8b5cf6;
+    --a-blue: #3d8bff;
+    --a-cyan: #22e7ff;
+    --a-lime: #d4ff3d;
+    --b-bg: #fafaf7;
+    --b-ink: #0b1220;
+    --b-accent: #1d2b6b;
+    --b-accent-2: #c9a441;
+    --b-line: #e8e4d8;
+  }
+  html { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  .font-display-a { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+  .font-serif-b { font-family: 'Fraunces', serif; font-optical-sizing: auto; }
+
+  /* ============ Variation A — Web3 Neon Dashboard ============ */
+  .var-a {
+    background: var(--a-bg);
+    color: #f4f2ff;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(139, 92, 246, 0.35), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 10%, rgba(255, 77, 210, 0.25), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 50% 100%, rgba(34, 231, 255, 0.18), transparent 60%),
+      linear-gradient(var(--a-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--a-grid) 1px, transparent 1px);
+    background-size: auto, auto, auto, 48px 48px, 48px 48px;
+    background-position: 0 0, 0 0, 0 0, -1px -1px, -1px -1px;
+  }
+  .var-a .glass {
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 30px 80px -30px rgba(139, 92, 246, 0.35), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .var-a .gradient-border {
+    position: relative;
+    background: linear-gradient(180deg, rgba(20,16,40,0.75), rgba(10,8,24,0.75));
+    border-radius: 24px;
+  }
+  .var-a .gradient-border::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: 24px; padding: 1px;
+    background: linear-gradient(135deg, #8b5cf6 0%, #ff4dd2 40%, #22e7ff 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    pointer-events: none;
+  }
+  .var-a .text-gradient {
+    background: linear-gradient(120deg, #ffffff 0%, #d4c7ff 30%, #ff4dd2 60%, #22e7ff 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .var-a .text-gradient-cold {
+    background: linear-gradient(120deg, #e0f2ff 0%, #8b5cf6 60%, #22e7ff 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .var-a .btn-primary {
+    background: linear-gradient(120deg, #8b5cf6, #ff4dd2 60%, #22e7ff);
+    color: #0a0618; font-weight: 600;
+    box-shadow: 0 10px 40px -10px rgba(255, 77, 210, 0.55), 0 0 0 1px rgba(255,255,255,0.15) inset;
+  }
+  .var-a .btn-ghost {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+  .var-a .pill-net {
+    background: rgba(139, 92, 246, 0.12);
+    border: 1px solid rgba(139, 92, 246, 0.35);
+  }
+  .var-a .pill-net .dot {
+    background: #8b5cf6; box-shadow: 0 0 10px #8b5cf6;
+  }
+  .var-a .glow-purple { box-shadow: 0 0 60px -10px rgba(139,92,246,0.5); }
+  .var-a .glow-pink { box-shadow: 0 0 60px -10px rgba(255,77,210,0.5); }
+  .var-a .glow-cyan { box-shadow: 0 0 60px -10px rgba(34,231,255,0.45); }
+  .var-a .scan-line {
+    background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%);
+  }
+  .var-a input, .var-a textarea, .var-a select {
+    background: rgba(10, 8, 24, 0.6);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #e8e4ff;
+  }
+  .var-a input::placeholder { color: rgba(228,224,255,0.35); }
+  .var-a input:focus, .var-a textarea:focus {
+    outline: none; border-color: rgba(255,77,210,0.5);
+    box-shadow: 0 0 0 3px rgba(255,77,210,0.15);
+  }
+  .var-a .tab-active {
+    background: linear-gradient(120deg, rgba(139,92,246,0.25), rgba(255,77,210,0.2));
+    border: 1px solid rgba(255,77,210,0.4);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .var-a .ticker {
+    background: linear-gradient(90deg, transparent, rgba(139,92,246,0.08) 20%, rgba(139,92,246,0.08) 80%, transparent);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .var-a .marquee-track { animation: marquee 40s linear infinite; }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+  .pulse-glow { animation: pulse-glow 2.4s ease-in-out infinite; }
+
+  .var-a .success-bg {
+    background:
+      radial-gradient(ellipse at top right, rgba(34, 231, 255, 0.22), transparent 60%),
+      radial-gradient(ellipse at bottom left, rgba(139, 92, 246, 0.18), transparent 60%),
+      linear-gradient(180deg, rgba(14, 32, 28, 0.6), rgba(10, 8, 24, 0.8));
+  }
+  .var-a .fail-bg {
+    background:
+      radial-gradient(ellipse at top right, rgba(255, 77, 77, 0.22), transparent 60%),
+      radial-gradient(ellipse at bottom left, rgba(255, 77, 210, 0.15), transparent 60%),
+      linear-gradient(180deg, rgba(40, 14, 18, 0.6), rgba(20, 8, 14, 0.8));
+  }
+
+  .var-a .hash-bg {
+    background-image: repeating-linear-gradient(-45deg, rgba(139,92,246,0.06) 0 1px, transparent 1px 10px);
+  }
+
+  /* ============ Variation B — Academic Minimalist ============ */
+  .var-b {
+    background: var(--b-bg);
+    color: var(--b-ink);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(11, 18, 32, 0.08) 1px, transparent 0);
+    background-size: 28px 28px;
+    background-position: -1px -1px;
+  }
+  .var-b .paper {
+    background: #ffffff;
+    border: 1px solid var(--b-line);
+    box-shadow: 0 1px 0 rgba(11,18,32,0.02);
+  }
+  .var-b .rule {
+    border-color: var(--b-line);
+  }
+  .var-b .btn-primary {
+    background: var(--b-accent);
+    color: #ffffff;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .var-b .btn-primary:hover { background: #151f52; }
+  .var-b .btn-outline {
+    background: transparent;
+    color: var(--b-ink);
+    border: 1px solid var(--b-ink);
+  }
+  .var-b input, .var-b textarea, .var-b select {
+    background: #ffffff;
+    border: 1px solid var(--b-line);
+    color: var(--b-ink);
+    border-radius: 2px;
+  }
+  .var-b input::placeholder { color: #97908a; }
+  .var-b input:focus, .var-b textarea:focus {
+    outline: none;
+    border-color: var(--b-accent);
+    box-shadow: 0 0 0 3px rgba(29, 43, 107, 0.08);
+  }
+  .var-b .tab-active {
+    border-bottom: 2px solid var(--b-accent);
+    color: var(--b-accent);
+    font-weight: 600;
+  }
+  .var-b .pill-net {
+    background: #ffffff;
+    border: 1px solid var(--b-line);
+    color: var(--b-ink);
+  }
+  .var-b .pill-net .dot { background: var(--b-accent); }
+  .var-b .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #726c64;
+  }
+  .var-b .seal {
+    width: 80px; height: 80px; border-radius: 999px;
+    border: 1.5px solid var(--b-accent);
+    display: grid; place-items: center;
+    position: relative;
+    background:
+      radial-gradient(circle at 50% 50%, #fff 60%, transparent 61%),
+      conic-gradient(from 0deg, var(--b-accent) 0 6deg, transparent 6deg 12deg);
+  }
+  .var-b .success-band {
+    background: linear-gradient(90deg, #f4f8f1, #ffffff);
+    border: 1px solid #c9e0b8;
+  }
+  .var-b .fail-band {
+    background: linear-gradient(90deg, #fdf3f1, #ffffff);
+    border: 1px solid #e5b8b0;
+  }
+  .var-b .serif-number {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-variation-settings: "opsz" 144;
+    letter-spacing: -0.03em;
+  }
+  .var-b .diag-divider {
+    background-image:
+      repeating-linear-gradient(-45deg, var(--b-line) 0 1px, transparent 1px 8px);
+    height: 12px;
+  }
+
+  /* Shared */
+  .var-divider {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.2em;
+  }
+  .qr-dot {
+    background: currentColor;
+    width: 6px; height: 6px;
+  }
+  .checker {
+    background-image:
+      linear-gradient(45deg, rgba(0,0,0,0.04) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(0,0,0,0.04) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.04) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.04) 75%);
+    background-size: 14px 14px;
+    background-position: 0 0, 0 7px, 7px -7px, -7px 0;
+  }
+  .scroll-smooth { scroll-behavior: smooth; }
+</style>
+</head>
+<body class="scroll-smooth">
+
+<!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<!-- ░░░░░░░░░░░░░░░░░░░░  VARIATION BANNER A  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<section class="w-full py-10 bg-black text-white text-center var-divider">
+  <div class="text-xs tracking-[0.4em] text-white/40">EDIPROOF · WIREFRAMES · DESIGN EXPLORATION</div>
+  <div class="mt-4 text-2xl md:text-3xl font-bold">━━━ VARIATION A &nbsp;·&nbsp; WEB3 NEON DASHBOARD ━━━</div>
+  <div class="mt-2 text-white/50 text-sm">dark · glassmorphic · vibrant · crypto-native</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- VARIATION A                                                  -->
+<!-- ============================================================ -->
+<div class="var-a relative overflow-hidden">
+
+  <!-- Top Nav -->
+  <header class="relative z-10">
+    <div class="max-w-7xl mx-auto px-8 pt-7 pb-4 flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <div class="relative w-11 h-11 rounded-2xl glow-purple" style="background: conic-gradient(from 200deg, #8b5cf6, #ff4dd2, #22e7ff, #8b5cf6);">
+          <div class="absolute inset-[2px] rounded-2xl bg-[#0a0618] flex items-center justify-center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="url(#g1)" stroke-width="1.6"/><path d="M8 11.5l3 3 5-5" stroke="url(#g1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="g1" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#ff4dd2"/><stop offset="1" stop-color="#22e7ff"/></linearGradient></defs></svg>
+          </div>
+        </div>
+        <div>
+          <div class="font-display-a text-xl font-bold tracking-tight">edi<span class="text-gradient">proof</span></div>
+          <div class="text-[10px] font-mono text-white/40 tracking-[0.25em] -mt-0.5">ON-CHAIN CREDENTIALS</div>
+        </div>
+      </div>
+      <!-- Tabs -->
+      <nav class="glass rounded-full p-1 flex items-center gap-1 text-sm">
+        <button class="px-5 py-2 rounded-full text-white/70 hover:text-white">Issue</button>
+        <button class="px-5 py-2 rounded-full tab-active text-white">Verify</button>
+        <button class="px-5 py-2 rounded-full text-white/70 hover:text-white">My Certificates</button>
+      </nav>
+      <!-- Wallet -->
+      <div class="flex items-center gap-3">
+        <span class="pill-net rounded-full px-3 py-1.5 flex items-center gap-2 text-xs font-mono">
+          <span class="dot w-1.5 h-1.5 rounded-full pulse-glow"></span> SEPOLIA
+        </span>
+        <button class="glass rounded-full pl-2 pr-4 py-1.5 flex items-center gap-2 text-sm">
+          <span class="w-6 h-6 rounded-full" style="background: conic-gradient(from 40deg, #ff4dd2, #8b5cf6, #22e7ff, #ff4dd2);"></span>
+          <span class="font-mono text-white/90">0xAbC…7890</span>
+        </button>
+      </div>
+    </div>
+    <div class="h-px w-full" style="background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);"></div>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative z-10 max-w-7xl mx-auto px-8 pt-16 pb-10">
+    <div class="flex items-end justify-between flex-wrap gap-6">
+      <div class="max-w-2xl">
+        <div class="font-mono text-[11px] tracking-[0.3em] text-white/50 mb-4">◆ PROOF PROTOCOL v1.4 · LIVE</div>
+        <h1 class="font-display-a text-6xl md:text-7xl font-bold leading-[0.95] text-gradient">
+          Credentials<br>that can't<br>be forged.
+        </h1>
+        <p class="mt-6 text-white/60 max-w-lg leading-relaxed">
+          Ediproof issues academic certificates as soulbound tokens — permanently bound to the student's wallet. Institutions sign, students keep, the world verifies. Zero trust. Zero tampering.
+        </p>
+        <div class="mt-8 flex items-center gap-3">
+          <button class="btn-primary px-6 py-3 rounded-full text-sm">Connect Institution</button>
+          <button class="btn-ghost px-6 py-3 rounded-full text-sm text-white/90">How it works →</button>
+        </div>
+      </div>
+      <!-- Hero accent card -->
+      <div class="gradient-border p-6 w-80 relative">
+        <div class="absolute -top-3 left-6 px-2 py-0.5 rounded bg-black text-[10px] font-mono tracking-widest">LATEST BLOCK</div>
+        <div class="font-mono text-xs text-white/50">#5,942,118</div>
+        <div class="text-gradient-cold font-display-a text-3xl font-bold mt-1">0.000042 ETH</div>
+        <div class="text-white/50 text-xs mt-1">avg. issue cost</div>
+        <div class="mt-4 flex items-end gap-1 h-12">
+          <div class="flex-1 bg-purple-500/40 rounded-sm" style="height: 40%"></div>
+          <div class="flex-1 bg-pink-500/50 rounded-sm" style="height: 65%"></div>
+          <div class="flex-1 bg-purple-500/40 rounded-sm" style="height: 30%"></div>
+          <div class="flex-1 bg-cyan-400/60 rounded-sm" style="height: 80%"></div>
+          <div class="flex-1 bg-purple-500/40 rounded-sm" style="height: 55%"></div>
+          <div class="flex-1 bg-pink-500/50 rounded-sm" style="height: 75%"></div>
+          <div class="flex-1 bg-cyan-400/60 rounded-sm" style="height: 45%"></div>
+          <div class="flex-1 bg-purple-500/40 rounded-sm" style="height: 90%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats grid -->
+    <div class="mt-14 grid grid-cols-1 md:grid-cols-4 gap-5">
+      <div class="gradient-border p-6">
+        <div class="flex items-center justify-between">
+          <div class="font-mono text-[10px] tracking-[0.25em] text-white/50">CERTIFICATES ISSUED</div>
+          <div class="w-2 h-2 rounded-full bg-emerald-400 pulse-glow"></div>
+        </div>
+        <div class="mt-3 font-display-a text-5xl font-bold text-gradient">142</div>
+        <div class="mt-2 text-xs text-white/50 flex items-center gap-1">
+          <span class="text-emerald-400">▲ 12</span> this week
+        </div>
+      </div>
+      <div class="gradient-border p-6">
+        <div class="font-mono text-[10px] tracking-[0.25em] text-white/50">APPROVED INSTITUTIONS</div>
+        <div class="mt-3 font-display-a text-5xl font-bold text-gradient-cold">08</div>
+        <div class="mt-2 flex -space-x-2">
+          <span class="w-6 h-6 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 border border-black"></span>
+          <span class="w-6 h-6 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 border border-black"></span>
+          <span class="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-pink-500 border border-black"></span>
+          <span class="w-6 h-6 rounded-full bg-white/10 border border-black text-[10px] grid place-items-center font-mono">+5</span>
+        </div>
+      </div>
+      <div class="gradient-border p-6">
+        <div class="font-mono text-[10px] tracking-[0.25em] text-white/50">VERIFICATIONS PERFORMED</div>
+        <div class="mt-3 font-display-a text-5xl font-bold text-gradient">1,207</div>
+        <div class="mt-2 text-xs text-white/50">over last 30 days</div>
+      </div>
+      <div class="gradient-border p-6 relative overflow-hidden">
+        <div class="absolute inset-0 hash-bg opacity-40"></div>
+        <div class="relative">
+          <div class="font-mono text-[10px] tracking-[0.25em] text-white/50">TAMPER ATTEMPTS BLOCKED</div>
+          <div class="mt-3 font-display-a text-5xl font-bold" style="color:#ff6b8a;">03</div>
+          <div class="mt-2 text-xs text-white/50">hash mismatch · auto-flagged</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ISSUE TAB -->
+  <section class="relative z-10 max-w-7xl mx-auto px-8 py-14">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="font-mono text-[11px] tracking-[0.3em] text-white/50">§ 01</div>
+      <div class="h-px flex-1 bg-white/10"></div>
+      <div class="font-mono text-[11px] tracking-[0.3em] text-white/70">ISSUE TAB</div>
+    </div>
+
+    <div class="gradient-border p-8 md:p-10">
+      <div class="flex items-center justify-between flex-wrap gap-4 mb-8">
+        <div>
+          <h2 class="font-display-a text-3xl font-bold">Mint a new credential</h2>
+          <p class="text-white/50 text-sm mt-1">Once signed, this certificate is forever bound to the student's wallet.</p>
+        </div>
+        <!-- Toggle: Issue New / Reissue -->
+        <div class="glass rounded-full p-1 flex items-center text-xs font-mono">
+          <button class="px-4 py-2 rounded-full tab-active">ISSUE NEW</button>
+          <button class="px-4 py-2 rounded-full text-white/60">REISSUE EXISTING</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-xs font-mono tracking-widest text-white/50 mb-2">STUDENT WALLET</label>
+          <input class="w-full rounded-xl px-4 py-3 font-mono text-sm" value="0x7a1f9B4c...dE8F31" />
+        </div>
+        <div>
+          <label class="block text-xs font-mono tracking-widest text-white/50 mb-2">STUDENT NAME</label>
+          <input class="w-full rounded-xl px-4 py-3 text-sm" value="Aarav Sharma" />
+        </div>
+        <div>
+          <label class="block text-xs font-mono tracking-widest text-white/50 mb-2">COURSE NAME</label>
+          <input class="w-full rounded-xl px-4 py-3 text-sm" value="B.Tech — Computer Science & Engineering" />
+        </div>
+        <div>
+          <label class="block text-xs font-mono tracking-widest text-white/50 mb-2">INSTITUTION NAME</label>
+          <input class="w-full rounded-xl px-4 py-3 text-sm" value="Indian Institute of Technology, Delhi" />
+        </div>
+
+        <!-- Reissue extra field (shown for demo) -->
+        <div class="md:col-span-2 rounded-xl p-4 border border-dashed border-white/15 bg-white/[0.02]">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="font-mono text-[10px] tracking-widest text-pink-300">REISSUE MODE · EXTRA FIELD</span>
+            <span class="flex-1 h-px bg-white/10"></span>
+          </div>
+          <label class="block text-xs font-mono tracking-widest text-white/50 mb-2">OLD TOKEN ID</label>
+          <input class="w-full rounded-xl px-4 py-3 font-mono text-sm" placeholder="e.g. #0042" />
+        </div>
+
+        <!-- Drop zone -->
+        <div class="md:col-span-2">
+          <label class="block text-xs font-mono tracking-widest text-white/50 mb-2">CERTIFICATE PDF</label>
+          <div class="relative rounded-2xl border-2 border-dashed border-white/15 p-10 text-center bg-white/[0.02] overflow-hidden">
+            <div class="absolute inset-0 hash-bg opacity-40"></div>
+            <div class="relative">
+              <div class="mx-auto w-14 h-14 rounded-2xl glass flex items-center justify-center glow-purple mb-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 15V3m0 0l-4 4m4-4l4 4M5 21h14"/></svg>
+              </div>
+              <div class="font-display-a text-lg">Drop PDF or <span class="text-gradient underline">browse</span></div>
+              <div class="text-xs text-white/40 mt-1 font-mono">PDF · max 10MB · hashed client-side before upload</div>
+              <div class="mt-4 inline-flex items-center gap-2 glass rounded-full px-3 py-1.5 text-xs font-mono">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                degree-final-aarav.pdf · 2.1 MB
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 flex items-center justify-between flex-wrap gap-4">
+        <div class="text-xs text-white/50 font-mono">⛽ est. gas · 0.00004 ETH · ~$0.12</div>
+        <div class="flex items-center gap-3">
+          <button class="btn-ghost px-5 py-3 rounded-full text-sm">Save Draft</button>
+          <button class="btn-primary px-7 py-3 rounded-full text-sm">Issue Certificate →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success toast mockup -->
+    <div class="mt-6 gradient-border p-5 flex items-center gap-4 success-bg">
+      <div class="w-11 h-11 rounded-full grid place-items-center" style="background: radial-gradient(circle, rgba(34,231,255,0.4), rgba(34,231,255,0.1));">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22e7ff" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>
+      </div>
+      <div class="flex-1">
+        <div class="font-display-a font-semibold">Transaction confirmed · Block #5,942,118</div>
+        <div class="text-xs text-white/60 font-mono mt-0.5">Tx hash: 0x9e3f...a4b2 · Gas used 41,203</div>
+      </div>
+      <a class="text-xs font-mono text-cyan-300 underline whitespace-nowrap">View on Etherscan ↗</a>
+    </div>
+  </section>
+
+  <!-- VERIFY TAB -->
+  <section class="relative z-10 max-w-7xl mx-auto px-8 py-14">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="font-mono text-[11px] tracking-[0.3em] text-white/50">§ 02</div>
+      <div class="h-px flex-1 bg-white/10"></div>
+      <div class="font-mono text-[11px] tracking-[0.3em] text-white/70">VERIFY TAB</div>
+    </div>
+
+    <div class="gradient-border p-8 md:p-10">
+      <div class="flex items-start justify-between flex-wrap gap-6 mb-8">
+        <div>
+          <h2 class="font-display-a text-3xl font-bold">Verify a credential</h2>
+          <p class="text-white/50 text-sm mt-1">Anyone can verify — no wallet required.</p>
+        </div>
+        <!-- Sub tabs -->
+        <div class="glass rounded-full p-1 flex items-center text-xs font-mono">
+          <button class="px-4 py-2 rounded-full tab-active">BY DETAILS</button>
+          <button class="px-4 py-2 rounded-full text-white/60">BY TOKEN ID</button>
+          <button class="px-4 py-2 rounded-full text-white/60">BY WALLET</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+          <label class="block text-xs font-mono tracking-widest text-white/50 mb-2">STUDENT NAME</label>
+          <input class="w-full rounded-xl px-4 py-3 text-sm" value="John Doe" />
+        </div>
+        <div>
+          <label class="block text-xs font-mono tracking-widest text-white/50 mb-2">COURSE</label>
+          <input class="w-full rounded-xl px-4 py-3 text-sm" value="B.Tech Computer Science" />
+        </div>
+        <div>
+          <label class="block text-xs font-mono tracking-widest text-white/50 mb-2">INSTITUTION</label>
+          <input class="w-full rounded-xl px-4 py-3 text-sm" value="Massachusetts Institute of Technology" />
+        </div>
+        <div>
+          <label class="block text-xs font-mono tracking-widest text-white/50 mb-2">IPFS URI</label>
+          <input class="w-full rounded-xl px-4 py-3 font-mono text-sm" value="ipfs://bafybeig...h3rk" />
+        </div>
+      </div>
+      <div class="mt-6 flex justify-end">
+        <button class="btn-primary px-9 py-4 rounded-full text-base">Verify on-chain →</button>
+      </div>
+    </div>
+
+    <!-- RESULT — SUCCESS -->
+    <div class="mt-10">
+      <div class="font-mono text-[11px] tracking-[0.3em] text-white/50 mb-3">RESULT · STATE: OK</div>
+      <div class="gradient-border p-8 md:p-10 success-bg relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 rounded-full" style="background: radial-gradient(circle, rgba(34,231,255,0.3), transparent 70%);"></div>
+
+        <div class="relative flex items-start justify-between flex-wrap gap-6">
+          <div class="flex-1 min-w-[260px]">
+            <div class="inline-flex items-center gap-3 rounded-full pl-2 pr-5 py-2 glow-cyan" style="background: linear-gradient(120deg, rgba(34,231,255,0.2), rgba(139,92,246,0.15)); border: 1px solid rgba(34,231,255,0.4);">
+              <span class="w-8 h-8 rounded-full grid place-items-center" style="background: linear-gradient(135deg, #22e7ff, #8b5cf6);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a0618" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+              </span>
+              <span class="font-display-a font-bold tracking-wide">VERIFIED AUTHENTIC</span>
+            </div>
+
+            <div class="mt-6 flex items-baseline gap-4">
+              <div class="font-mono text-xs text-white/50">CERTIFICATE</div>
+              <div class="font-display-a text-5xl font-bold text-gradient-cold">#0007</div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-2 gap-y-4 gap-x-8 max-w-xl">
+              <div>
+                <div class="font-mono text-[10px] tracking-widest text-white/40">STUDENT</div>
+                <div class="font-display-a text-lg font-semibold mt-1">John Doe</div>
+              </div>
+              <div>
+                <div class="font-mono text-[10px] tracking-widest text-white/40">COURSE</div>
+                <div class="font-display-a text-lg font-semibold mt-1">B.Tech Computer Science</div>
+              </div>
+              <div>
+                <div class="font-mono text-[10px] tracking-widest text-white/40">INSTITUTION</div>
+                <div class="mt-1 flex items-center gap-2">
+                  <span class="font-display-a text-lg font-semibold">MIT</span>
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded-full" style="background:rgba(34,231,255,0.15); border:1px solid rgba(34,231,255,0.4); color:#22e7ff;">APPROVED ISSUER ✓</span>
+                </div>
+              </div>
+              <div>
+                <div class="font-mono text-[10px] tracking-widest text-white/40">ISSUED</div>
+                <div class="font-display-a text-lg font-semibold mt-1">11 Apr 2026 · 14:32 UTC</div>
+              </div>
+              <div>
+                <div class="font-mono text-[10px] tracking-widest text-white/40">STATUS</div>
+                <div class="mt-1 inline-flex items-center gap-2 text-emerald-300">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-glow"></span>
+                  <span class="font-mono">ACTIVE</span>
+                </div>
+              </div>
+              <div>
+                <div class="font-mono text-[10px] tracking-widest text-white/40">OWNER WALLET</div>
+                <div class="mt-1 flex items-center gap-2">
+                  <span class="font-mono text-sm">0xAbC…1234</span>
+                  <button class="w-6 h-6 rounded-md glass grid place-items-center">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 flex items-center gap-3 flex-wrap">
+              <a class="glass rounded-full px-4 py-2 text-xs font-mono flex items-center gap-2">
+                <span class="text-cyan-300">IPFS</span> ipfs://bafybeig…h3rk ↗
+              </a>
+              <a class="glass rounded-full px-4 py-2 text-xs font-mono flex items-center gap-2">
+                <span class="text-pink-300">ETHERSCAN</span> 0x9e3f…a4b2 ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- QR placeholder -->
+          <div class="relative">
+            <div class="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
+              <div class="w-36 h-36 grid grid-cols-10 gap-[2px]" aria-label="qr">
+                <!-- generate dummy qr grid -->
+                <script>/*noop*/</script>
+                <template id="qrseed"></template>
+              </div>
+              <div class="text-center mt-3 text-[10px] font-mono text-white/50 tracking-widest">SCAN TO VERIFY</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT — FAILED -->
+    <div class="mt-10">
+      <div class="font-mono text-[11px] tracking-[0.3em] text-white/50 mb-3">RESULT · STATE: FAIL</div>
+      <div class="gradient-border p-8 md:p-10 fail-bg relative overflow-hidden">
+        <div class="absolute inset-0 hash-bg opacity-60"></div>
+        <div class="relative flex items-start justify-between flex-wrap gap-6">
+          <div class="flex-1 min-w-[260px]">
+            <div class="inline-flex items-center gap-3 rounded-full pl-2 pr-5 py-2" style="background: linear-gradient(120deg, rgba(255,77,77,0.2), rgba(255,77,210,0.15)); border: 1px solid rgba(255,77,77,0.5); box-shadow: 0 0 40px -10px rgba(255,77,77,0.5);">
+              <span class="w-8 h-8 rounded-full grid place-items-center bg-red-500">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </span>
+              <span class="font-display-a font-bold tracking-wide" style="color:#ffc3cc;">CERTIFICATE NOT FOUND / TAMPERED</span>
+            </div>
+            <div class="mt-5 max-w-lg text-white/70 leading-relaxed">
+              The provided IPFS hash does not match the on-chain commitment for any issued certificate. Either the document has been modified after issuance, or no such credential exists.
+            </div>
+            <div class="mt-5 grid grid-cols-2 gap-4 max-w-lg font-mono text-xs">
+              <div class="glass rounded-xl p-3">
+                <div class="text-white/40">ON-CHAIN HASH</div>
+                <div class="truncate text-red-300">0xf1e2…9a1c</div>
+              </div>
+              <div class="glass rounded-xl p-3">
+                <div class="text-white/40">SUBMITTED HASH</div>
+                <div class="truncate text-red-300">0xf1e2…7b44</div>
+              </div>
+            </div>
+          </div>
+          <div class="font-display-a text-8xl font-black opacity-20" style="color:#ff6b8a;">!=</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MY CERTIFICATES -->
+  <section class="relative z-10 max-w-7xl mx-auto px-8 py-14">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="font-mono text-[11px] tracking-[0.3em] text-white/50">§ 03</div>
+      <div class="h-px flex-1 bg-white/10"></div>
+      <div class="font-mono text-[11px] tracking-[0.3em] text-white/70">MY CERTIFICATES</div>
+    </div>
+
+    <div class="flex items-end justify-between mb-6 flex-wrap gap-4">
+      <h2 class="font-display-a text-3xl font-bold">Your wallet · <span class="text-gradient-cold">4 credentials</span></h2>
+      <div class="flex items-center gap-2 text-xs font-mono">
+        <button class="glass rounded-full px-4 py-2">ALL</button>
+        <button class="glass rounded-full px-4 py-2 text-white/50">ACTIVE</button>
+        <button class="glass rounded-full px-4 py-2 text-white/50">REVOKED</button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <!-- Card 1 -->
+      <div class="gradient-border p-5 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32" style="background: radial-gradient(circle, rgba(255,77,210,0.3), transparent 70%);"></div>
+        <div class="relative">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl font-display-a font-bold grid place-items-center" style="background: linear-gradient(135deg, #ff4dd2, #8b5cf6);">M</div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">ACTIVE</span>
+          </div>
+          <div class="mt-5 font-display-a text-lg font-semibold leading-tight">B.Tech Computer Science</div>
+          <div class="text-white/50 text-xs mt-1">MIT · John Doe</div>
+          <div class="mt-4 flex items-center justify-between text-[10px] font-mono text-white/40">
+            <span>#0007</span>
+            <span>11 Apr 2026</span>
+          </div>
+          <button class="mt-4 w-full btn-ghost rounded-full py-2 text-xs">View PDF ↗</button>
+        </div>
+      </div>
+
+      <!-- Card 2 w/ reissue banner -->
+      <div class="gradient-border p-5 relative overflow-hidden">
+        <div class="absolute -top-3 left-4 right-4 text-center rounded-b-lg py-1 text-[10px] font-mono" style="background: linear-gradient(90deg, #ff4dd2, #22e7ff); color:#0a0618;">↺ REISSUED → #0018</div>
+        <div class="mt-4 flex items-center justify-between">
+          <div class="w-10 h-10 rounded-xl font-display-a font-bold grid place-items-center" style="background: linear-gradient(135deg, #22e7ff, #3d8bff);">I</div>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">SUPERSEDED</span>
+        </div>
+        <div class="mt-5 font-display-a text-lg font-semibold leading-tight">M.Sc Data Science</div>
+        <div class="text-white/50 text-xs mt-1">IIT Delhi · John Doe</div>
+        <div class="mt-4 flex items-center justify-between text-[10px] font-mono text-white/40">
+          <span>#0011</span>
+          <span>02 Mar 2026</span>
+        </div>
+        <button class="mt-4 w-full btn-ghost rounded-full py-2 text-xs">View PDF ↗</button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="gradient-border p-5 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32" style="background: radial-gradient(circle, rgba(34,231,255,0.3), transparent 70%);"></div>
+        <div class="relative">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl font-display-a font-bold grid place-items-center" style="background: linear-gradient(135deg, #d4ff3d, #22e7ff); color:#0a0618;">S</div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">ACTIVE</span>
+          </div>
+          <div class="mt-5 font-display-a text-lg font-semibold leading-tight">Advanced Solidity Cert.</div>
+          <div class="text-white/50 text-xs mt-1">Stanford Online · John Doe</div>
+          <div class="mt-4 flex items-center justify-between text-[10px] font-mono text-white/40">
+            <span>#0014</span>
+            <span>29 Mar 2026</span>
+          </div>
+          <button class="mt-4 w-full btn-ghost rounded-full py-2 text-xs">View PDF ↗</button>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="gradient-border p-5 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32" style="background: radial-gradient(circle, rgba(255,77,77,0.25), transparent 70%);"></div>
+        <div class="relative">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl font-display-a font-bold grid place-items-center" style="background: linear-gradient(135deg, #ff6b8a, #8b5cf6);">B</div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-red-500/15 text-red-300 border border-red-500/30">REVOKED</span>
+          </div>
+          <div class="mt-5 font-display-a text-lg font-semibold leading-tight">Data Structures Cert.</div>
+          <div class="text-white/50 text-xs mt-1">Berkeley · John Doe</div>
+          <div class="mt-4 flex items-center justify-between text-[10px] font-mono text-white/40">
+            <span>#0003</span>
+            <span>15 Jan 2026</span>
+          </div>
+          <button class="mt-4 w-full btn-ghost rounded-full py-2 text-xs">View PDF ↗</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative z-10 mt-10">
+    <div class="ticker py-3 overflow-hidden">
+      <div class="flex gap-10 marquee-track whitespace-nowrap font-mono text-xs text-white/60">
+        <span>◆ MIT issued cert #142 · 2m ago</span>
+        <span>◆ IIT Delhi issued cert #141 · 5m ago</span>
+        <span>◆ Stanford verified cert #7 · 7m ago</span>
+        <span>◆ Berkeley revoked cert #3 · 12m ago</span>
+        <span>◆ ETHZurich issued cert #140 · 18m ago</span>
+        <span>◆ Cambridge verified cert #138 · 25m ago</span>
+        <span>◆ MIT issued cert #142 · 2m ago</span>
+        <span>◆ IIT Delhi issued cert #141 · 5m ago</span>
+        <span>◆ Stanford verified cert #7 · 7m ago</span>
+        <span>◆ Berkeley revoked cert #3 · 12m ago</span>
+        <span>◆ ETHZurich issued cert #140 · 18m ago</span>
+        <span>◆ Cambridge verified cert #138 · 25m ago</span>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-8 py-6 flex items-center justify-between text-xs text-white/40">
+      <div>© 2026 Ediproof · forging the unforgeable</div>
+      <div class="font-mono flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-purple-400 pulse-glow"></span>
+        BUILT ON SEPOLIA TESTNET
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<!-- ░░░░░░░░░░░░░░░░░░░░░  VARIATION BANNER B  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<section class="w-full py-10 bg-[#0b1220] text-white text-center var-divider">
+  <div class="text-xs tracking-[0.4em] text-white/40">EDIPROOF · WIREFRAMES · DESIGN EXPLORATION</div>
+  <div class="mt-4 text-2xl md:text-3xl font-bold">━━━ VARIATION B &nbsp;·&nbsp; ACADEMIC MINIMALIST ━━━</div>
+  <div class="mt-2 text-white/50 text-sm">institutional · serif · restrained · registrar-grade</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- VARIATION B                                                  -->
+<!-- ============================================================ -->
+<div class="var-b">
+
+  <!-- Top Nav -->
+  <header class="border-b rule bg-[#fafaf7]/90 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-10 py-6 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <!-- Crest -->
+        <div class="relative">
+          <svg width="38" height="38" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="18" fill="none" stroke="#0b1220" stroke-width="1.2"/>
+            <circle cx="20" cy="20" r="14" fill="none" stroke="#0b1220" stroke-width="0.8"/>
+            <path d="M20 8L26 20L20 32L14 20Z" fill="#1d2b6b"/>
+            <path d="M14 20h12" stroke="#c9a441" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="font-serif-b text-[22px] leading-none text-[#0b1220]">Ediproof</div>
+          <div class="kicker mt-1">Office of Digital Credentials</div>
+        </div>
+      </div>
+
+      <nav class="flex items-center gap-10 text-[15px]">
+        <button class="text-[#0b1220]/70 hover:text-[#0b1220]">Issue</button>
+        <button class="tab-active pb-1">Verify</button>
+        <button class="text-[#0b1220]/70 hover:text-[#0b1220]">My Certificates</button>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <span class="pill-net rounded-full px-3 py-1.5 flex items-center gap-2 text-xs font-mono">
+          <span class="dot w-1.5 h-1.5 rounded-full"></span> SEPOLIA
+        </span>
+        <button class="rounded-sm border border-[#0b1220] px-4 py-1.5 flex items-center gap-2 text-sm">
+          <span class="w-5 h-5 rounded-full" style="background: conic-gradient(from 40deg, #1d2b6b, #c9a441, #1d2b6b);"></span>
+          <span class="font-mono">0xAbC…7890</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Masthead -->
+  <section class="max-w-7xl mx-auto px-10 pt-20 pb-16">
+    <div class="grid grid-cols-12 gap-10 items-end">
+      <div class="col-span-12 md:col-span-8">
+        <div class="kicker">Vol. I · No. 4 · Apr 11, 2026</div>
+        <div class="h-px bg-[#0b1220] my-5"></div>
+        <h1 class="font-serif-b text-[88px] leading-[0.9] tracking-[-0.035em] text-[#0b1220]">
+          The ledger<br>
+          <em class="font-serif-b" style="font-variation-settings:'opsz' 144; font-style: italic; color:#1d2b6b;">of record.</em>
+        </h1>
+        <div class="h-px bg-[#0b1220] my-5"></div>
+        <div class="flex items-start gap-10">
+          <p class="font-serif-b italic text-lg text-[#0b1220]/70 max-w-md leading-snug">
+            "Every degree, every transcript, every seal — rendered immutable. A registrar's office for the next hundred years."
+          </p>
+          <div class="ml-auto text-right max-w-sm">
+            <p class="text-sm text-[#0b1220]/80 leading-relaxed">Ediproof issues academic credentials as soulbound tokens — non-transferable, tamper-evident, and verifiable by any party without a wallet.</p>
+            <div class="mt-4 flex items-center gap-3 justify-end">
+              <button class="btn-primary px-5 py-2.5 rounded-sm text-sm">Issue Credential</button>
+              <button class="btn-outline px-5 py-2.5 rounded-sm text-sm">Read Charter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side seal -->
+      <div class="col-span-12 md:col-span-4 flex justify-center">
+        <div class="text-center">
+          <div class="seal mx-auto">
+            <div class="font-serif-b text-xs tracking-widest" style="color:var(--b-accent);">EST. MMXXVI</div>
+          </div>
+          <div class="kicker mt-4">Authenticated by Sepolia</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="diag-divider max-w-7xl mx-auto"></div>
+
+  <!-- Stats bar -->
+  <section class="max-w-7xl mx-auto px-10 py-14">
+    <div class="kicker mb-6">The Registry · by the numbers</div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-0 border-y rule">
+      <div class="p-8 border-r rule">
+        <div class="kicker">Certificates Issued</div>
+        <div class="serif-number text-7xl mt-3 text-[#0b1220]">142</div>
+        <div class="text-xs text-[#0b1220]/60 mt-2">+12 this week</div>
+      </div>
+      <div class="p-8 border-r rule">
+        <div class="kicker">Approved Institutions</div>
+        <div class="serif-number text-7xl mt-3" style="color:var(--b-accent);">08</div>
+        <div class="text-xs text-[#0b1220]/60 mt-2">MIT, IIT, Stanford, +5</div>
+      </div>
+      <div class="p-8 border-r rule">
+        <div class="kicker">Verifications Performed</div>
+        <div class="serif-number text-7xl mt-3 text-[#0b1220]">1,207</div>
+        <div class="text-xs text-[#0b1220]/60 mt-2">over 30 days</div>
+      </div>
+      <div class="p-8">
+        <div class="kicker">Tamper Attempts Blocked</div>
+        <div class="serif-number text-7xl mt-3 text-[#0b1220]">03</div>
+        <div class="text-xs text-[#0b1220]/60 mt-2">auto-flagged by hash</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ISSUE TAB -->
+  <section class="max-w-7xl mx-auto px-10 py-16">
+    <div class="flex items-center gap-4 mb-8">
+      <div class="kicker">§ 01 · Issue</div>
+      <div class="h-px flex-1 bg-[#0b1220]/20"></div>
+    </div>
+
+    <div class="grid grid-cols-12 gap-10">
+      <div class="col-span-12 md:col-span-4">
+        <h2 class="font-serif-b text-5xl leading-[0.95] text-[#0b1220]">Issue a new<br><em>credential.</em></h2>
+        <p class="mt-5 text-sm text-[#0b1220]/70 leading-relaxed max-w-xs">
+          Complete the form with student particulars. The certificate will be cryptographically signed and bound permanently to the recipient's wallet.
+        </p>
+        <div class="mt-6 border-t rule pt-5 text-xs text-[#0b1220]/60 space-y-2">
+          <div class="flex justify-between"><span>Protocol</span><span class="font-mono">ERC-5114 (SBT)</span></div>
+          <div class="flex justify-between"><span>Est. gas</span><span class="font-mono">0.00004 ETH</span></div>
+          <div class="flex justify-between"><span>Finality</span><span class="font-mono">~15 seconds</span></div>
+        </div>
+      </div>
+
+      <div class="col-span-12 md:col-span-8 paper p-10 rounded-sm">
+        <!-- Toggle -->
+        <div class="flex items-center justify-between mb-8">
+          <div class="kicker">Form A-7 · Credential Record</div>
+          <div class="flex items-center rounded-sm border rule text-xs overflow-hidden">
+            <button class="px-4 py-2 bg-[#0b1220] text-white">Issue New</button>
+            <button class="px-4 py-2 text-[#0b1220]/70">Reissue Existing</button>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <label class="kicker block mb-2">Student Wallet</label>
+              <input class="w-full px-3 py-2.5 font-mono text-sm" value="0x7a1f9B4c...dE8F31" />
+            </div>
+            <div>
+              <label class="kicker block mb-2">Student Name</label>
+              <input class="w-full px-3 py-2.5 text-sm" value="Aarav Sharma" />
+            </div>
+            <div>
+              <label class="kicker block mb-2">Course Name</label>
+              <input class="w-full px-3 py-2.5 text-sm" value="B.Tech — Computer Science" />
+            </div>
+            <div>
+              <label class="kicker block mb-2">Institution Name</label>
+              <input class="w-full px-3 py-2.5 text-sm" value="Indian Institute of Technology, Delhi" />
+            </div>
+          </div>
+
+          <!-- Reissue extra -->
+          <div class="border-l-2 pl-4" style="border-color: var(--b-accent-2);">
+            <div class="kicker" style="color: var(--b-accent-2);">Reissue Mode · Additional Field</div>
+            <label class="kicker block mb-2 mt-2">Old Token ID</label>
+            <input class="w-full px-3 py-2.5 font-mono text-sm max-w-xs" placeholder="e.g. #0042" />
+          </div>
+
+          <!-- Drop zone -->
+          <div>
+            <label class="kicker block mb-2">Certificate Document (PDF)</label>
+            <div class="border-2 border-dashed rule rounded-sm p-8 text-center">
+              <div class="mx-auto w-12 h-12 rounded-full border border-[#0b1220] grid place-items-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0b1220" stroke-width="1.6"><path d="M12 15V3m0 0l-4 4m4-4l4 4M5 21h14"/></svg>
+              </div>
+              <div class="font-serif-b text-lg mt-3">Drop file here <span class="italic" style="color:var(--b-accent);">or browse</span></div>
+              <div class="kicker mt-1">PDF · hashed before upload · max 10mb</div>
+              <div class="mt-4 inline-flex items-center gap-2 border rule px-3 py-1.5 rounded-sm text-xs font-mono">
+                <span class="w-1.5 h-1.5 rounded-full" style="background:var(--b-accent);"></span>
+                degree-final-aarav.pdf · 2.1 mb
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t rule flex items-center justify-between">
+          <div class="kicker">Gas est. 0.00004 ETH · ~$0.12</div>
+          <div class="flex gap-3">
+            <button class="btn-outline px-5 py-2.5 rounded-sm text-sm">Save Draft</button>
+            <button class="btn-primary px-6 py-2.5 rounded-sm text-sm">Issue Certificate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success toast -->
+    <div class="mt-8 paper success-band rounded-sm p-5 flex items-center gap-5">
+      <div class="w-10 h-10 rounded-full grid place-items-center" style="background:#5a8f3c;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+      </div>
+      <div class="flex-1">
+        <div class="font-serif-b text-lg">Confirmed — Block #5,942,118</div>
+        <div class="kicker mt-1">Tx 0x9e3f…a4b2 · gas 41,203</div>
+      </div>
+      <a class="text-sm underline decoration-dotted" style="color:var(--b-accent);">View on Etherscan ↗</a>
+    </div>
+  </section>
+
+  <div class="diag-divider max-w-7xl mx-auto"></div>
+
+  <!-- VERIFY TAB -->
+  <section class="max-w-7xl mx-auto px-10 py-16">
+    <div class="flex items-center gap-4 mb-8">
+      <div class="kicker">§ 02 · Verify</div>
+      <div class="h-px flex-1 bg-[#0b1220]/20"></div>
+    </div>
+
+    <div class="grid grid-cols-12 gap-10">
+      <div class="col-span-12 md:col-span-5">
+        <h2 class="font-serif-b text-5xl leading-[0.95] text-[#0b1220]">Attest &<br><em>authenticate.</em></h2>
+        <p class="mt-5 text-sm text-[#0b1220]/70 leading-relaxed max-w-sm">
+          Any person, anywhere, can confirm the authenticity of an Ediproof credential without holding a wallet or installing software.
+        </p>
+      </div>
+
+      <div class="col-span-12 md:col-span-7 paper p-10 rounded-sm">
+        <!-- Sub tabs -->
+        <div class="flex items-center gap-8 text-sm border-b rule pb-3 mb-7">
+          <button class="tab-active pb-2">By Details</button>
+          <button class="text-[#0b1220]/50 pb-2">By Token ID</button>
+          <button class="text-[#0b1220]/50 pb-2">By Wallet</button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-5">
+          <div>
+            <label class="kicker block mb-2">Student Name</label>
+            <input class="w-full px-3 py-2.5 text-sm" value="John Doe" />
+          </div>
+          <div>
+            <label class="kicker block mb-2">Course</label>
+            <input class="w-full px-3 py-2.5 text-sm" value="B.Tech Computer Science" />
+          </div>
+          <div>
+            <label class="kicker block mb-2">Institution</label>
+            <input class="w-full px-3 py-2.5 text-sm" value="Massachusetts Institute of Technology" />
+          </div>
+          <div>
+            <label class="kicker block mb-2">IPFS URI</label>
+            <input class="w-full px-3 py-2.5 font-mono text-sm" value="ipfs://bafybeig...h3rk" />
+          </div>
+        </div>
+
+        <div class="mt-8 flex justify-end">
+          <button class="btn-primary px-9 py-3 rounded-sm">Verify →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT — SUCCESS -->
+    <div class="mt-14">
+      <div class="kicker mb-4">Result · State: Verified</div>
+      <article class="paper success-band rounded-sm overflow-hidden">
+        <div class="flex items-center justify-between px-8 py-4 border-b" style="border-color:#c9e0b8;">
+          <div class="flex items-center gap-4">
+            <div class="w-9 h-9 rounded-full grid place-items-center" style="background:#5a8f3c;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <div class="font-serif-b text-2xl text-[#2b4520]">Verified Authentic</div>
+          </div>
+          <div class="kicker" style="color:#5a8f3c;">Signature · OK · Hash · OK · Issuer · OK</div>
+        </div>
+
+        <div class="p-10 grid grid-cols-12 gap-10">
+          <div class="col-span-12 md:col-span-8">
+            <div class="flex items-baseline gap-4 mb-6">
+              <div class="kicker">Certificate</div>
+              <div class="serif-number text-6xl" style="color:var(--b-accent);">No. 07</div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-y-5 gap-x-10">
+              <div class="border-t rule pt-3">
+                <div class="kicker">Student</div>
+                <div class="font-serif-b text-xl mt-1">John Doe</div>
+              </div>
+              <div class="border-t rule pt-3">
+                <div class="kicker">Course</div>
+                <div class="font-serif-b text-xl mt-1">B.Tech Computer Science</div>
+              </div>
+              <div class="border-t rule pt-3">
+                <div class="kicker">Institution</div>
+                <div class="flex items-center gap-2 mt-1">
+                  <div class="font-serif-b text-xl">MIT</div>
+                  <span class="text-[10px] px-2 py-0.5 rounded-sm border" style="border-color:var(--b-accent); color:var(--b-accent); letter-spacing:0.1em;">APPROVED ISSUER ✓</span>
+                </div>
+              </div>
+              <div class="border-t rule pt-3">
+                <div class="kicker">Issued</div>
+                <div class="font-serif-b text-xl mt-1">11 April 2026 · 14:32 UTC</div>
+              </div>
+              <div class="border-t rule pt-3">
+                <div class="kicker">Status</div>
+                <div class="font-serif-b text-xl mt-1 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full" style="background:#5a8f3c;"></span>
+                  Active
+                </div>
+              </div>
+              <div class="border-t rule pt-3">
+                <div class="kicker">Owner Wallet</div>
+                <div class="font-mono text-sm mt-1 flex items-center gap-2">
+                  0xAbC…1234
+                  <button class="w-6 h-6 border rule grid place-items-center">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-3 text-xs">
+              <a class="border rule px-3 py-2 rounded-sm font-mono flex items-center gap-2">
+                <span class="kicker">IPFS</span> bafybeig…h3rk ↗
+              </a>
+              <a class="border rule px-3 py-2 rounded-sm font-mono flex items-center gap-2">
+                <span class="kicker">Etherscan</span> 0x9e3f…a4b2 ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- QR -->
+          <div class="col-span-12 md:col-span-4 flex flex-col items-center justify-center">
+            <div class="p-3 border rule rounded-sm bg-white">
+              <div class="w-40 h-40 grid grid-cols-10 gap-[2px]" id="qr-b" aria-label="qr"></div>
+            </div>
+            <div class="kicker mt-3">Scan to Verify</div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- RESULT — FAILED -->
+    <div class="mt-12">
+      <div class="kicker mb-4">Result · State: Failed</div>
+      <article class="paper fail-band rounded-sm overflow-hidden">
+        <div class="flex items-center justify-between px-8 py-4 border-b" style="border-color:#e5b8b0;">
+          <div class="flex items-center gap-4">
+            <div class="w-9 h-9 rounded-full grid place-items-center" style="background:#a73826;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </div>
+            <div class="font-serif-b text-2xl" style="color:#5e1b12;">Certificate Not Found / Tampered</div>
+          </div>
+          <div class="kicker" style="color:#a73826;">Hash mismatch · Do not honor</div>
+        </div>
+        <div class="p-10 grid grid-cols-12 gap-10 items-start">
+          <div class="col-span-12 md:col-span-8">
+            <p class="font-serif-b text-lg italic text-[#0b1220]/75 leading-snug max-w-md">
+              The supplied document does not match the on-chain commitment for any issued credential. Either the file has been modified, or no such certificate exists on record.
+            </p>
+            <div class="mt-6 grid grid-cols-2 gap-4">
+              <div class="border rule p-3 rounded-sm">
+                <div class="kicker">On-chain hash</div>
+                <div class="font-mono text-xs mt-1 truncate">0xf1e2…9a1c</div>
+              </div>
+              <div class="border rule p-3 rounded-sm">
+                <div class="kicker">Submitted hash</div>
+                <div class="font-mono text-xs mt-1 truncate" style="color:#a73826;">0xf1e2…7b44</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-4 text-right">
+            <div class="serif-number text-8xl" style="color:#a73826;">≠</div>
+            <div class="kicker" style="color:#a73826;">signatures diverge</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="diag-divider max-w-7xl mx-auto"></div>
+
+  <!-- MY CERTIFICATES -->
+  <section class="max-w-7xl mx-auto px-10 py-16">
+    <div class="flex items-center gap-4 mb-8">
+      <div class="kicker">§ 03 · My Certificates</div>
+      <div class="h-px flex-1 bg-[#0b1220]/20"></div>
+    </div>
+
+    <div class="flex items-end justify-between mb-8 flex-wrap gap-4">
+      <h2 class="font-serif-b text-5xl leading-[0.95]">Your register<br><em>of record.</em></h2>
+      <div class="flex items-center gap-6 text-sm">
+        <button class="tab-active pb-1">All (4)</button>
+        <button class="text-[#0b1220]/50">Active (3)</button>
+        <button class="text-[#0b1220]/50">Revoked (1)</button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Card 1 -->
+      <article class="paper rounded-sm p-6">
+        <div class="flex items-center justify-between">
+          <div class="w-12 h-12 rounded-full grid place-items-center font-serif-b text-lg border" style="border-color:var(--b-accent); color:var(--b-accent);">M</div>
+          <span class="text-[10px] tracking-widest px-2 py-0.5 border" style="border-color:#5a8f3c; color:#5a8f3c;">ACTIVE</span>
+        </div>
+        <div class="mt-6 font-serif-b text-xl leading-tight">B.Tech Computer Science</div>
+        <div class="kicker mt-2">MIT · John Doe</div>
+        <div class="border-t rule mt-5 pt-3 flex justify-between text-xs text-[#0b1220]/60 font-mono">
+          <span>#0007</span>
+          <span>11 Apr 2026</span>
+        </div>
+        <button class="mt-4 w-full btn-outline rounded-sm py-2 text-xs">View PDF ↗</button>
+      </article>
+
+      <!-- Card 2 reissued -->
+      <article class="paper rounded-sm p-6 relative">
+        <div class="absolute top-0 left-0 right-0 text-center py-1.5 text-[10px] tracking-widest font-mono" style="background:var(--b-accent); color:#fff;">↺ REISSUED → #0018</div>
+        <div class="mt-6 flex items-center justify-between">
+          <div class="w-12 h-12 rounded-full grid place-items-center font-serif-b text-lg border" style="border-color:var(--b-accent); color:var(--b-accent);">I</div>
+          <span class="text-[10px] tracking-widest px-2 py-0.5 border" style="border-color:var(--b-accent-2); color:#8a6e22;">SUPERSEDED</span>
+        </div>
+        <div class="mt-6 font-serif-b text-xl leading-tight">M.Sc Data Science</div>
+        <div class="kicker mt-2">IIT Delhi · John Doe</div>
+        <div class="border-t rule mt-5 pt-3 flex justify-between text-xs text-[#0b1220]/60 font-mono">
+          <span>#0011</span>
+          <span>02 Mar 2026</span>
+        </div>
+        <button class="mt-4 w-full btn-outline rounded-sm py-2 text-xs">View PDF ↗</button>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="paper rounded-sm p-6">
+        <div class="flex items-center justify-between">
+          <div class="w-12 h-12 rounded-full grid place-items-center font-serif-b text-lg border" style="border-color:var(--b-accent); color:var(--b-accent);">S</div>
+          <span class="text-[10px] tracking-widest px-2 py-0.5 border" style="border-color:#5a8f3c; color:#5a8f3c;">ACTIVE</span>
+        </div>
+        <div class="mt-6 font-serif-b text-xl leading-tight">Advanced Solidity</div>
+        <div class="kicker mt-2">Stanford Online · John Doe</div>
+        <div class="border-t rule mt-5 pt-3 flex justify-between text-xs text-[#0b1220]/60 font-mono">
+          <span>#0014</span>
+          <span>29 Mar 2026</span>
+        </div>
+        <button class="mt-4 w-full btn-outline rounded-sm py-2 text-xs">View PDF ↗</button>
+      </article>
+
+      <!-- Card 4 revoked -->
+      <article class="paper rounded-sm p-6 relative">
+        <div class="absolute inset-0 pointer-events-none checker opacity-40"></div>
+        <div class="relative">
+          <div class="flex items-center justify-between">
+            <div class="w-12 h-12 rounded-full grid place-items-center font-serif-b text-lg border" style="border-color:#a73826; color:#a73826;">B</div>
+            <span class="text-[10px] tracking-widest px-2 py-0.5 border" style="border-color:#a73826; color:#a73826;">REVOKED</span>
+          </div>
+          <div class="mt-6 font-serif-b text-xl leading-tight">Data Structures</div>
+          <div class="kicker mt-2">Berkeley · John Doe</div>
+          <div class="border-t rule mt-5 pt-3 flex justify-between text-xs text-[#0b1220]/60 font-mono">
+            <span>#0003</span>
+            <span>15 Jan 2026</span>
+          </div>
+          <button class="mt-4 w-full btn-outline rounded-sm py-2 text-xs">View PDF ↗</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t rule mt-10">
+    <div class="max-w-7xl mx-auto px-10 py-5 overflow-hidden border-b rule">
+      <div class="flex items-center gap-3">
+        <div class="kicker whitespace-nowrap">Live Register</div>
+        <div class="h-4 w-px bg-[#0b1220]/20"></div>
+        <div class="flex-1 overflow-hidden">
+          <div class="flex gap-10 marquee-track whitespace-nowrap text-xs text-[#0b1220]/75 font-mono" style="animation: marquee 40s linear infinite;">
+            <span>— MIT issued cert #142 · 2m ago</span>
+            <span>— IIT Delhi issued cert #141 · 5m ago</span>
+            <span>— Stanford verified cert #7 · 7m ago</span>
+            <span>— Berkeley revoked cert #3 · 12m ago</span>
+            <span>— ETHZurich issued cert #140 · 18m ago</span>
+            <span>— Cambridge verified cert #138 · 25m ago</span>
+            <span>— MIT issued cert #142 · 2m ago</span>
+            <span>— IIT Delhi issued cert #141 · 5m ago</span>
+            <span>— Stanford verified cert #7 · 7m ago</span>
+            <span>— Berkeley revoked cert #3 · 12m ago</span>
+            <span>— ETHZurich issued cert #140 · 18m ago</span>
+            <span>— Cambridge verified cert #138 · 25m ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-10 py-6 flex items-center justify-between text-xs text-[#0b1220]/60">
+      <div class="font-serif-b italic">© 2026 Ediproof · The Ledger of Record</div>
+      <div class="font-mono flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full" style="background:var(--b-accent);"></span>
+        BUILT ON SEPOLIA TESTNET
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Generate a deterministic pseudo-QR pattern for both variations
+  (function() {
+    function seed(i, j) {
+      // fixed pattern so it looks like a QR, not random each reload
+      const v = Math.sin(i * 12.9898 + j * 78.233) * 43758.5453;
+      return (v - Math.floor(v)) > 0.5;
+    }
+    function buildQR(container, color) {
+      if (!container) return;
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+          const d = document.createElement('div');
+          // finder squares corners
+          const inFinder = (i < 3 && j < 3) || (i < 3 && j > 6) || (i > 6 && j < 3);
+          const finderFill = (i === 0 || i === 2 || j === 0 || j === 2 || (i === 1 && j === 1));
+          let on;
+          if (inFinder) on = finderFill;
+          else on = seed(i, j);
+          d.style.width = '100%';
+          d.style.height = '100%';
+          d.style.background = on ? color : 'transparent';
+          frag.appendChild(d);
+        }
+      }
+      container.appendChild(frag);
+    }
+    // Variation A QR
+    document.querySelectorAll('.var-a [aria-label="qr"]').forEach(el => {
+      el.innerHTML = '';
+      buildQR(el, '#e8e4ff');
+    });
+    // Variation B QR
+    document.querySelectorAll('.var-b [aria-label="qr"]').forEach(el => {
+      el.innerHTML = '';
+      buildQR(el, '#0b1220');
+    });
+  })();
+
+  // Simple non-functional tab toggles for demo feel
+  document.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', e => e.preventDefault());
+  });
+</script>
+</body>
+</html>
