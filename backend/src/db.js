@@ -32,10 +32,10 @@ export const insertEvent = db.prepare(`
 
 export const selectStats = db.prepare(`
   SELECT
-    SUM(CASE WHEN kind = 'issue'   THEN 1 ELSE 0 END) AS totalIssued,
-    SUM(CASE WHEN kind = 'revoke'  THEN 1 ELSE 0 END) AS totalRevoked,
-    SUM(CASE WHEN kind = 'reissue' THEN 1 ELSE 0 END) AS totalReissued,
-    SUM(CASE WHEN kind = 'verify'  THEN 1 ELSE 0 END) AS totalVerified,
+    SUM(CASE WHEN kind = 'issued'   THEN 1 ELSE 0 END) AS totalIssued,
+    SUM(CASE WHEN kind = 'revoked'  THEN 1 ELSE 0 END) AS totalRevoked,
+    SUM(CASE WHEN kind = 'reissued' THEN 1 ELSE 0 END) AS totalReissued,
+    SUM(CASE WHEN kind = 'verified' THEN 1 ELSE 0 END) AS totalVerified,
     COUNT(DISTINCT institution) AS institutions
   FROM events
 `);
@@ -54,7 +54,7 @@ export const selectByInstitution = db.prepare(`
     COUNT(*) AS issuedCount,
     MAX(created_at) AS lastActive
   FROM events
-  WHERE institution = ? AND kind = 'issue'
+  WHERE institution = ? AND kind = 'issued'
   GROUP BY institution
 `);
 
