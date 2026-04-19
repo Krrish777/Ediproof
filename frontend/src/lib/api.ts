@@ -45,11 +45,28 @@ export async function logEvent(payload: {
 export async function uploadFile(file: File): Promise<{ cid: string; ipfsURI: string; gatewayURL: string }> {
   const formData = new FormData()
   formData.append('file', file)
-  const res = await fetch(`${BASE_URL}/api/upload`, {
-    method: 'POST',
-    body: formData,
-  })
-  if (!res.ok) throw new Error('Failed to upload file')
+
+  let res: Response
+  try {
+    res = await fetch(`${BASE_URL}/api/upload`, { method: 'POST', body: formData })
+  } catch {
+    throw new Error(
+      `Backend unreachable at ${BASE_URL}. Is the backend server running? ` +
+      `Start it by double-clicking start.bat, or run "npm start" in the backend folder.`,
+    )
+  }
+
+  if (!res.ok) {
+    let detail = `HTTP ${res.status}`
+    try {
+      const body = await res.json() as { error?: string }
+      if (body?.error) detail = body.error
+    } catch {
+      try { detail = (await res.text()).slice(0, 200) } catch { /* ignore */ }
+    }
+    throw new Error(`Upload rejected: ${detail}`)
+  }
+
   return res.json()
 }
 

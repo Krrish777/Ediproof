@@ -32,6 +32,7 @@ function IssueForm() {
   // File upload
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'done' | 'error'>('idle')
   const [uploadResult, setUploadResult] = useState<{ cid: string; ipfsURI: string; gatewayURL: string } | null>(null)
+  const [uploadError, setUploadError] = useState<string | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
 
   // Tx status
@@ -56,12 +57,14 @@ function IssueForm() {
     if (!file) return
     setUploadStatus('uploading')
     setUploadResult(null)
+    setUploadError(null)
     try {
       const result = await uploadFile(file)
       setUploadResult(result)
       setIpfsURI(result.ipfsURI)
       setUploadStatus('done')
-    } catch {
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : 'Upload failed')
       setUploadStatus('error')
     }
   }
@@ -269,7 +272,9 @@ function IssueForm() {
                     </span>
                   )}
                   {uploadStatus === 'error' && (
-                    <span style={{ color: 'var(--error)' }}>Upload failed. Try again.</span>
+                    <span style={{ color: 'var(--error)', display: 'block', fontSize: '0.85rem', lineHeight: 1.4 }}>
+                      Upload failed — {uploadError ?? 'unknown error'}
+                    </span>
                   )}
                 </div>
                 <input
