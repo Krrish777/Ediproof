@@ -3,6 +3,7 @@
 .env.local
 .env.*.local
 *.env
+CREDENTIALS_NEEDED.md
 
 # ── Node ─────────────────────────────────────────────────────────────
 node_modules/
