@@ -28,9 +28,17 @@ const config: HardhatUserConfig = {
       : undefined as any,
   },
   etherscan: {
-    apiKey: {
-      sepolia: ETHERSCAN_API_KEY,
-    },
+    apiKey: ETHERSCAN_API_KEY,
+    customChains: [
+      {
+        network: "sepolia",
+        chainId: 11155111,
+        urls: {
+          apiURL: "https://api.etherscan.io/v2/api?chainid=11155111",
+          browserURL: "https://sepolia.etherscan.io",
+        },
+      },
+    ],
   },
   paths: {
     sources: "./contracts",
