@@ -4,12 +4,12 @@ import { useMemo } from 'react'
 import { ethers } from 'ethers'
 import deployment from '@/lib/deployment.json'
 import abi from '@/lib/EdiproofCertificate.abi.json'
+import { getMetaMaskProvider } from '@/lib/wallet'
 
 const ALCHEMY_URL = 'https://eth-sepolia.g.alchemy.com/v2/24LEXOjVROKmZfZaPn6vx'
 const CONTRACT_ADDRESS = deployment.address
 
 export interface ContractHook {
-  contract: ethers.Contract | null
   readContract: ethers.Contract
 }
 
@@ -19,27 +19,20 @@ export function useContract(): ContractHook {
     return new ethers.Contract(CONTRACT_ADDRESS, abi, provider)
   }, [])
 
-  const contract = useMemo(() => {
-    if (typeof window === 'undefined' || !window.ethereum) return null
-    try {
-      const provider = new ethers.BrowserProvider(window.ethereum)
-      // Return a contract that gets its signer lazily
-      return new ethers.Contract(CONTRACT_ADDRESS, abi, provider)
-    } catch {
-      return null
-    }
-  }, [])
-
-  return { contract, readContract }
+  return { readContract }
 }
 
-export async function getSignedContract(): Promise<ethers.Contract | null> {
-  if (typeof window === 'undefined' || !window.ethereum) return null
-  try {
-    const provider = new ethers.BrowserProvider(window.ethereum)
-    const signer = await provider.getSigner()
-    return new ethers.Contract(CONTRACT_ADDRESS, abi, signer)
-  } catch {
-    return null
+/**
+ * Returns a Contract bound to a MetaMask signer — specifically MetaMask,
+ * ignoring OKX/Coinbase/other injected wallets.
+ * Throws if MetaMask is not installed or the user rejects the connection.
+ */
+export async function getSignedContract(): Promise<ethers.Contract> {
+  const mm = getMetaMaskProvider()
+  if (!mm) {
+    throw new Error('MetaMask not found. Install it from metamask.io and refresh the page.')
   }
+  const provider = new ethers.BrowserProvider(mm as unknown as ethers.Eip1193Provider)
+  const signer = await provider.getSigner()
+  return new ethers.Contract(CONTRACT_ADDRESS, abi, signer)
 }

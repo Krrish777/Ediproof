@@ -1,16 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-
-declare global {
-  interface Window {
-    ethereum?: {
-      request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
-      on: (event: string, handler: (...args: unknown[]) => void) => void
-      removeListener: (event: string, handler: (...args: unknown[]) => void) => void
-    }
-  }
-}
+import { getMetaMaskProvider, type EIP1193Provider } from '@/lib/wallet'
 
 export interface WalletState {
   address: string | null
@@ -22,6 +13,31 @@ export interface WalletState {
 
 const SEPOLIA_CHAIN_ID = 11155111
 
+async function switchToSepolia(provider: EIP1193Provider): Promise<void> {
+  try {
+    await provider.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: '0xaa36a7' }],
+    })
+  } catch (err: unknown) {
+    const errCode = (err as { code?: number })?.code
+    if (errCode === 4902) {
+      await provider.request({
+        method: 'wallet_addEthereumChain',
+        params: [{
+          chainId: '0xaa36a7',
+          chainName: 'Sepolia',
+          nativeCurrency: { name: 'Sepolia ETH', symbol: 'ETH', decimals: 18 },
+          rpcUrls: ['https://rpc.sepolia.org'],
+          blockExplorerUrls: ['https://sepolia.etherscan.io'],
+        }],
+      })
+    } else {
+      throw err
+    }
+  }
+}
+
 export function useWallet(): WalletState {
   const [address, setAddress] = useState<string | null>(null)
   const [chainId, setChainId] = useState<number | null>(null)
@@ -29,8 +45,9 @@ export function useWallet(): WalletState {
   const [error, setError] = useState<string | null>(null)
 
   const connect = useCallback(async () => {
-    if (!window.ethereum) {
-      setError('MetaMask not found. Please install MetaMask.')
+    const provider = getMetaMaskProvider()
+    if (!provider) {
+      setError('MetaMask not found. Please install the MetaMask browser extension from metamask.io and refresh this page.')
       return
     }
 
@@ -38,23 +55,24 @@ export function useWallet(): WalletState {
     setError(null)
 
     try {
-      const accounts = await window.ethereum.request({
+      const accounts = await provider.request({
         method: 'eth_requestAccounts',
       }) as string[]
 
-      if (accounts.length > 0) {
-        setAddress(accounts[0])
-      }
+      if (accounts.length > 0) setAddress(accounts[0])
 
-      const chainIdHex = await window.ethereum.request({
-        method: 'eth_chainId',
-      }) as string
-
+      const chainIdHex = await provider.request({ method: 'eth_chainId' }) as string
       const id = parseInt(chainIdHex, 16)
       setChainId(id)
 
       if (id !== SEPOLIA_CHAIN_ID) {
-        console.warn(`Connected to chain ${id}, expected Sepolia (${SEPOLIA_CHAIN_ID}). Please switch networks.`)
+        try {
+          await switchToSepolia(provider)
+          const newChainHex = await provider.request({ method: 'eth_chainId' }) as string
+          setChainId(parseInt(newChainHex, 16))
+        } catch {
+          setError('Please switch MetaMask to the Sepolia testnet to continue.')
+        }
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to connect wallet'
@@ -65,51 +83,40 @@ export function useWallet(): WalletState {
   }, [])
 
   useEffect(() => {
-    if (!window.ethereum) return
+    const provider = getMetaMaskProvider()
+    if (!provider) return
 
-    // Check if already connected
-    window.ethereum.request({ method: 'eth_accounts' })
+    provider.request({ method: 'eth_accounts' })
       .then((accounts) => {
         const accs = accounts as string[]
         if (accs.length > 0) {
           setAddress(accs[0])
-          return window.ethereum!.request({ method: 'eth_chainId' })
+          return provider.request({ method: 'eth_chainId' })
         }
       })
       .then((chainIdHex) => {
         if (chainIdHex) {
           const id = parseInt(chainIdHex as string, 16)
           setChainId(id)
-          if (id !== SEPOLIA_CHAIN_ID) {
-            console.warn(`Connected to chain ${id}, expected Sepolia (${SEPOLIA_CHAIN_ID}).`)
-          }
         }
       })
       .catch(() => {})
 
     const handleAccountsChanged = (accounts: unknown) => {
       const accs = accounts as string[]
-      if (accs.length === 0) {
-        setAddress(null)
-      } else {
-        setAddress(accs[0])
-      }
+      setAddress(accs.length === 0 ? null : accs[0])
     }
 
     const handleChainChanged = (chainIdHex: unknown) => {
-      const id = parseInt(chainIdHex as string, 16)
-      setChainId(id)
-      if (id !== SEPOLIA_CHAIN_ID) {
-        console.warn(`Switched to chain ${id}, expected Sepolia (${SEPOLIA_CHAIN_ID}).`)
-      }
+      setChainId(parseInt(chainIdHex as string, 16))
     }
 
-    window.ethereum.on('accountsChanged', handleAccountsChanged)
-    window.ethereum.on('chainChanged', handleChainChanged)
+    provider.on('accountsChanged', handleAccountsChanged)
+    provider.on('chainChanged', handleChainChanged)
 
     return () => {
-      window.ethereum?.removeListener('accountsChanged', handleAccountsChanged)
-      window.ethereum?.removeListener('chainChanged', handleChainChanged)
+      provider.removeListener('accountsChanged', handleAccountsChanged)
+      provider.removeListener('chainChanged', handleChainChanged)
     }
   }, [])
 
