@@ -55,12 +55,16 @@ if not exist "%~dp0backend\.env" (
 )
 
 REM --- Launch servers in new windows --------------------------
+REM     Use  start /D "path"  to set the working directory as a flag,
+REM     not  cd /d "..."  inside the command string. That avoids the
+REM     "filename, directory name, or volume label syntax is incorrect"
+REM     error on paths containing spaces.
 echo.
 echo [--] Starting backend on http://localhost:8787 ...
-start "Ediproof Backend"  cmd /k "cd /d \"%~dp0backend\"  && echo === BACKEND LOG === && echo. && npm start"
+start "Ediproof Backend" /D "%~dp0backend" cmd /k "echo === BACKEND LOG === && echo. && npm start"
 
 echo [--] Starting frontend on http://localhost:3000 ...
-start "Ediproof Frontend" cmd /k "cd /d \"%~dp0frontend\" && echo === FRONTEND LOG === && echo. && npm run dev"
+start "Ediproof Frontend" /D "%~dp0frontend" cmd /k "echo === FRONTEND LOG === && echo. && npm run dev"
 
 echo.
 echo [--] Waiting 15 seconds for servers to boot...
