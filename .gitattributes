@@ -1,0 +1,8 @@
+* text=auto
+
+# Windows batch scripts must have CRLF line endings or cmd.exe won't parse them.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Shell scripts must have LF line endings.
+*.sh  text eol=lf
