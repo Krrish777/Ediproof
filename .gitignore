@@ -1,0 +1,39 @@
+# ── Environment / secrets ───────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.env
+
+# ── Node ─────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── Hardhat / contracts ──────────────────────────────────────────────
+contracts/artifacts/
+contracts/cache/
+contracts/typechain-types/
+# deployments/ is committed — frontend reads address from deployments/sepolia.json
+
+# ── Next.js ──────────────────────────────────────────────────────────
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# ── Backend ──────────────────────────────────────────────────────────
+backend/*.db
+backend/*.db-shm
+backend/*.db-wal
+
+# ── OS ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE ──────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

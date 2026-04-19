@@ -165,6 +165,7 @@ function ByDetailsTab({ readContract }: { readContract: ReturnType<typeof useCon
   const [ipfsURI, setIpfsURI] = useState('')
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<VerifyResult | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   const liveHash = computeCertHash(name, course, institution, ipfsURI)
 
@@ -172,6 +173,7 @@ function ByDetailsTab({ readContract }: { readContract: ReturnType<typeof useCon
     e.preventDefault()
     setLoading(true)
     setResult(null)
+    setError(null)
     try {
       const res = await readContract.verifyCertificate(name, course, institution, ipfsURI)
       const [valid, tokenId, ownerAddr, revoked, replacedByTokenId] = res
@@ -184,14 +186,16 @@ function ByDetailsTab({ readContract }: { readContract: ReturnType<typeof useCon
       const verifyResult: VerifyResult = { valid, tokenId, ownerAddr, revoked, replacedByTokenId, cert }
       setResult(verifyResult)
 
-      await logEvent({
-        kind: valid ? 'verified' : 'forgery_attempt',
-        tokenId: valid ? Number(tokenId) : undefined,
-        actor: 'anonymous',
-        institution,
-      })
-    } catch {
-      setResult(null)
+      if (valid) {
+        await logEvent({
+          kind: 'verified',
+          tokenId: Number(tokenId),
+          actor: 'anonymous',
+          institution,
+        })
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Verification failed — check your network and try again.')
     } finally {
       setLoading(false)
     }
@@ -231,7 +235,13 @@ function ByDetailsTab({ readContract }: { readContract: ReturnType<typeof useCon
 
       {/* Result */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        {result === null && (
+        {error !== null && (
+          <div style={{ textAlign: 'center', color: 'var(--error)', border: '1px dashed var(--error)', padding: '1.5rem', maxWidth: '32rem' }}>
+            <p className="label" style={{ color: 'var(--error)', marginBottom: '0.5rem' }}>Lookup failed</p>
+            <p style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: '1rem' }}>{error}</p>
+          </div>
+        )}
+        {error === null && result === null && (
           <div style={{ textAlign: 'center', color: 'var(--ink-light)' }}>
             <p style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: '1.5rem', marginBottom: '0.5rem' }}>
               Enter certificate details
@@ -239,7 +249,7 @@ function ByDetailsTab({ readContract }: { readContract: ReturnType<typeof useCon
             <p style={{ fontSize: '0.875rem' }}>The ledger will render its verdict.</p>
           </div>
         )}
-        {result !== null && (
+        {error === null && result !== null && (
           <VerifyResultCard result={result} />
         )}
       </div>
