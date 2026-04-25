@@ -18,8 +18,8 @@ export default function IssuePage() {
 function IssueForm() {
   const { address } = useWallet()
 
-  // Toggle: 'issue' | 'reissue'
-  const [mode, setMode] = useState<'issue' | 'reissue'>('issue')
+  // Toggle: 'issue' | 'reissue' | 'revoke'
+  const [mode, setMode] = useState<'issue' | 'reissue' | 'revoke'>('issue')
 
   // Form fields
   const [studentAddress, setStudentAddress] = useState('')
@@ -99,7 +99,7 @@ function IssueForm() {
           actor: address || 'unknown',
           institution,
         })
-      } else {
+      } else if (mode === 'reissue') {
         const tx = await c.reissueCertificate(
           parseInt(oldTokenId),
           studentName,
@@ -123,6 +123,20 @@ function IssueForm() {
           txHash: tx.hash,
           actor: address || 'unknown',
           institution,
+        })
+      } else {
+        const tx = await c.revokeCertificate(parseInt(oldTokenId))
+        setTxHash(tx.hash)
+        await tx.wait()
+        setNewTokenId(oldTokenId)
+        setTxStatus('success')
+
+        await logEvent({
+          kind: 'revoked',
+          tokenId: parseInt(oldTokenId),
+          txHash: tx.hash,
+          actor: address || 'unknown',
+          institution: '',
         })
       }
     } catch (err: unknown) {
@@ -173,6 +187,13 @@ function IssueForm() {
             >
               Reissue Existing
             </button>
+            <button
+              type="button"
+              className={mode === 'revoke' ? 'active' : ''}
+              onClick={() => setMode('revoke')}
+            >
+              Revoke
+            </button>
           </div>
         </div>
 
@@ -181,11 +202,11 @@ function IssueForm() {
           {/* LEFT — form */}
           <div>
             <form onSubmit={handleSubmit}>
-              {/* Reissue: old token ID */}
-              {mode === 'reissue' && (
+              {/* Reissue / Revoke: token ID */}
+              {(mode === 'reissue' || mode === 'revoke') && (
                 <div style={{ marginBottom: '2rem' }}>
                   <label className="label" style={{ display: 'block', marginBottom: '0.5rem' }}>
-                    Old Token №
+                    {mode === 'revoke' ? 'Token №' : 'Old Token №'}
                   </label>
                   <input
                     className="field-input mono"
@@ -193,11 +214,12 @@ function IssueForm() {
                     placeholder="e.g. 42"
                     value={oldTokenId}
                     onChange={(e) => setOldTokenId(e.target.value)}
-                    required={mode === 'reissue'}
+                    required
                   />
                 </div>
               )}
 
+              {mode !== 'revoke' && (<>
               <div style={{ marginBottom: '2rem' }}>
                 <label className="label" style={{ display: 'block', marginBottom: '0.5rem' }}>
                   Student Wallet Address
@@ -328,6 +350,7 @@ function IssueForm() {
                   Updates live as you type. This exact hash will be stored on-chain.
                 </p>
               </div>
+              </>)}
 
               {/* Transaction status */}
               {txStatus === 'success' && (
@@ -381,10 +404,14 @@ function IssueForm() {
                 style={{ width: '100%' }}
               >
                 {txStatus === 'pending'
-                  ? 'Impressing upon the chain…'
+                  ? mode === 'revoke'
+                    ? 'Revoking from the chain…'
+                    : 'Impressing upon the chain…'
                   : mode === 'issue'
                   ? 'Impress upon the chain →'
-                  : 'Reissue upon the chain →'}
+                  : mode === 'reissue'
+                  ? 'Reissue upon the chain →'
+                  : 'Revoke from the chain →'}
               </button>
             </form>
           </div>
@@ -430,6 +457,24 @@ function IssueForm() {
                 Reissuing burns the old token and mints a new one. The old token ID is recorded
                 in the new certificate's <span className="mono" style={{ fontSize: '0.75rem' }}>reissuedFrom</span> field.
                 Use reissue only for corrections — not for new certificates.
+              </p>
+            </div>
+
+            {/* Marginalia about revoke */}
+            <div
+              style={{
+                padding: '1rem 1.25rem',
+                borderLeft: '2px solid var(--brass)',
+                background: 'rgba(138, 109, 59, 0.06)',
+              }}
+            >
+              <p className="label" style={{ fontSize: '0.65rem', marginBottom: '0.5rem', color: 'var(--brass)' }}>
+                On Revoke
+              </p>
+              <p style={{ fontSize: '0.8rem', color: 'var(--ink-faded)', lineHeight: '1.6' }}>
+                Revoking is a soft revocation — the token stays in the student's wallet but is
+                marked invalid. Verifiers will see it as <span className="mono" style={{ fontSize: '0.75rem' }}>Revoked</span>.
+                To physically remove the SBT, use Reissue with corrected fields instead.
               </p>
             </div>
 
