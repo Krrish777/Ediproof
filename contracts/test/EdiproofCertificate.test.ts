@@ -282,6 +282,182 @@ describe("EdiproofCertificate", function () {
     });
   });
 
+  describe("Reissue burns old token", function () {
+    it("ownerOf(oldId) reverts after reissue", async () => {
+      const { contract, institution, student, sample } = await loadFixture(deployFixture);
+      await contract
+        .connect(institution)
+        .issueCertificate(
+          student.address,
+          sample.name,
+          sample.course,
+          sample.institution,
+          sample.ipfs
+        );
+
+      await contract.connect(institution).reissueCertificate(
+        1,
+        sample.name,
+        sample.course,
+        sample.institution,
+        "ipfs://QmCorrectedHash",
+        student.address
+      );
+
+      await expect(contract.ownerOf(1)).to.be.revertedWithCustomError(
+        contract,
+        "ERC721NonexistentToken"
+      );
+      // Student now holds only the new token
+      expect(await contract.balanceOf(student.address)).to.equal(1);
+      expect(await contract.ownerOf(2)).to.equal(student.address);
+    });
+
+    it("old struct + replacedBy still readable for verification continuity", async () => {
+      const { contract, institution, student, sample } = await loadFixture(deployFixture);
+      await contract
+        .connect(institution)
+        .issueCertificate(
+          student.address,
+          sample.name,
+          sample.course,
+          sample.institution,
+          sample.ipfs
+        );
+      await contract.connect(institution).reissueCertificate(
+        1,
+        sample.name,
+        sample.course,
+        sample.institution,
+        "ipfs://QmCorrectedHash",
+        student.address
+      );
+
+      const old = await contract.getCertificate(1);
+      expect(old.revoked).to.equal(true);
+      expect(await contract.replacedBy(1)).to.equal(2);
+
+      // Verifying the old hash still tells the verifier "revoked, replaced by 2"
+      const result = await contract.verifyCertificate(
+        sample.name,
+        sample.course,
+        sample.institution,
+        sample.ipfs
+      );
+      expect(result.valid).to.equal(false);
+      expect(result.revoked).to.equal(true);
+      expect(result.replacedByTokenId).to.equal(2);
+    });
+  });
+
+  describe("tokenURI", function () {
+    it("returns a base64-encoded JSON data URI with name, image, attributes", async () => {
+      const { contract, institution, student, sample } = await loadFixture(deployFixture);
+      await contract
+        .connect(institution)
+        .issueCertificate(
+          student.address,
+          sample.name,
+          sample.course,
+          sample.institution,
+          sample.ipfs
+        );
+
+      const uri = await contract.tokenURI(1);
+      expect(uri.startsWith("data:application/json;base64,")).to.equal(true);
+
+      const json = decodeJsonDataURI(uri);
+      expect(json.name).to.contain(sample.name);
+      expect(json.name).to.contain(sample.course);
+      expect(json.description).to.contain(sample.institution);
+      expect(json.image.startsWith("data:image/svg+xml;base64,")).to.equal(true);
+      expect(json.external_url).to.equal(
+        "https://gateway.pinata.cloud/ipfs/QmSampleHash1234567890"
+      );
+
+      const attrs = Object.fromEntries(
+        json.attributes.map((a: { trait_type: string; value: unknown }) => [a.trait_type, a.value])
+      );
+      expect(attrs["Institution"]).to.equal(sample.institution);
+      expect(attrs["Status"]).to.equal("Active");
+      expect(attrs["Token ID"]).to.equal("#1");
+    });
+
+    it("flips Status to Revoked after revoke (soft revoke preserves token)", async () => {
+      const { contract, institution, student, sample } = await loadFixture(deployFixture);
+      await contract
+        .connect(institution)
+        .issueCertificate(
+          student.address,
+          sample.name,
+          sample.course,
+          sample.institution,
+          sample.ipfs
+        );
+      await contract.connect(institution).revokeCertificate(1);
+
+      // Soft revoke: token still owned by student
+      expect(await contract.ownerOf(1)).to.equal(student.address);
+
+      const json = decodeJsonDataURI(await contract.tokenURI(1));
+      const attrs = Object.fromEntries(
+        json.attributes.map((a: { trait_type: string; value: unknown }) => [a.trait_type, a.value])
+      );
+      expect(attrs["Status"]).to.equal("Revoked");
+
+      // SVG payload should contain the REVOKED stamp text
+      const svg = Buffer.from(
+        json.image.split(",")[1],
+        "base64"
+      ).toString("utf8");
+      expect(svg).to.contain("REVOKED");
+    });
+
+    it("reverts for nonexistent (burned) old token after reissue", async () => {
+      const { contract, institution, student, sample } = await loadFixture(deployFixture);
+      await contract
+        .connect(institution)
+        .issueCertificate(
+          student.address,
+          sample.name,
+          sample.course,
+          sample.institution,
+          sample.ipfs
+        );
+      await contract.connect(institution).reissueCertificate(
+        1,
+        sample.name,
+        sample.course,
+        sample.institution,
+        "ipfs://QmCorrectedHash",
+        student.address
+      );
+
+      await expect(contract.tokenURI(1)).to.be.revertedWithCustomError(
+        contract,
+        "ERC721NonexistentToken"
+      );
+    });
+
+    it("escapes JSON-special characters in user fields", async () => {
+      const { contract, institution, student } = await loadFixture(deployFixture);
+      await contract
+        .connect(institution)
+        .issueCertificate(
+          student.address,
+          'Alice "The Hacker" O\\Brien',
+          "Quote & Backslash 101",
+          "MIT",
+          "ipfs://QmEscape"
+        );
+
+      const uri = await contract.tokenURI(1);
+      // Must parse cleanly as JSON despite special characters in fields
+      const json = decodeJsonDataURI(uri);
+      expect(json.name).to.contain('Alice "The Hacker" O\\Brien');
+    });
+  });
+
   describe("getCertificatesByOwner", function () {
     it("returns all tokens for a student", async () => {
       const { contract, institution, student, sample } = await loadFixture(deployFixture);
@@ -312,4 +488,17 @@ describe("EdiproofCertificate", function () {
 // helper matcher for any bytes32
 function anyBytes32() {
   return (value: string) => typeof value === "string" && value.startsWith("0x") && value.length === 66;
+}
+
+function decodeJsonDataURI(uri: string): {
+  name: string;
+  description: string;
+  image: string;
+  external_url: string;
+  attributes: Array<{ trait_type: string; value: unknown; display_type?: string }>;
+} {
+  const prefix = "data:application/json;base64,";
+  if (!uri.startsWith(prefix)) throw new Error("not a JSON data URI");
+  const b64 = uri.slice(prefix.length);
+  return JSON.parse(Buffer.from(b64, "base64").toString("utf8"));
 }

@@ -4,6 +4,8 @@ pragma solidity ^0.8.28;
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 
 /// @title Ediproof Certificate
 /// @notice Soulbound (non-transferable) academic certificates as ERC-721 tokens.
@@ -162,6 +164,11 @@ contract EdiproofCertificate is ERC721Enumerable, Ownable {
         hashToTokenId[newHash] = newTokenId;
         replacedBy[oldTokenId] = newTokenId;
 
+        // Physically remove the superseded SBT from the old wallet. The struct,
+        // hash mapping, and replacedBy entry are intentionally retained so that
+        // verifyCertificate(oldHash) still returns "revoked, replaced by N".
+        _burn(oldTokenId);
+
         _safeMint(newStudentWallet, newTokenId);
 
         emit CertificateIssued(newTokenId, newStudentWallet, newHash, newInstitution);
@@ -223,6 +230,166 @@ contract EdiproofCertificate is ERC721Enumerable, Ownable {
 
     function totalCertificates() external view returns (uint256) {
         return _nextTokenId - 1;
+    }
+
+    // ---------------------------------------------------------------------
+    // Token metadata (fully on-chain)
+    // ---------------------------------------------------------------------
+
+    /// @notice Returns a base64-encoded JSON data URI containing name, description,
+    ///         on-chain SVG image, external_url to the IPFS-hosted PDF, and attributes.
+    ///         No off-chain metadata pin is required — every byte rendered by wallets
+    ///         is derived from contract storage.
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721)
+        returns (string memory)
+    {
+        _requireOwned(tokenId);
+        Certificate storage c = certificates[tokenId];
+
+        string memory image = string.concat(
+            "data:image/svg+xml;base64,",
+            Base64.encode(bytes(_buildSVG(tokenId, c)))
+        );
+
+        string memory status = c.revoked ? "Revoked" : "Active";
+
+        string memory json = string.concat(
+            '{"name":"',
+            _escapeJSON(c.courseName),
+            unicode" — ",
+            _escapeJSON(c.studentName),
+            '","description":"Ediproof Soulbound Certificate issued by ',
+            _escapeJSON(c.institution),
+            ". Verifiable on-chain via certificate hash.",
+            '","image":"',
+            image,
+            '","external_url":"',
+            _escapeJSON(_ipfsToGateway(c.ipfsURI)),
+            '","attributes":[',
+            '{"trait_type":"Institution","value":"',
+            _escapeJSON(c.institution),
+            '"},',
+            '{"trait_type":"Issued At","display_type":"date","value":',
+            Strings.toString(uint256(c.issuedAt)),
+            "},",
+            '{"trait_type":"Status","value":"',
+            status,
+            '"},',
+            '{"trait_type":"Token ID","value":"#',
+            Strings.toString(tokenId),
+            '"}]}'
+        );
+
+        return string.concat(
+            "data:application/json;base64,",
+            Base64.encode(bytes(json))
+        );
+    }
+
+    function _buildSVG(uint256 tokenId, Certificate storage c)
+        private
+        view
+        returns (string memory)
+    {
+        string memory revokedStamp = c.revoked
+            ? string.concat(
+                '<g transform="translate(300,200) rotate(-22)">',
+                '<rect x="-150" y="-40" width="300" height="80" fill="none" stroke="#a0372e" stroke-width="6"/>',
+                '<text x="0" y="14" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="48" fill="#a0372e" letter-spacing="6">REVOKED</text>',
+                "</g>"
+            )
+            : "";
+
+        return string.concat(
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid meet">',
+            '<rect width="600" height="400" fill="#f4ecd8"/>',
+            '<rect x="14" y="14" width="572" height="372" fill="none" stroke="#3a2618" stroke-width="2"/>',
+            '<rect x="22" y="22" width="556" height="356" fill="none" stroke="#8a6d3b" stroke-width="1"/>',
+            '<text x="300" y="78" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="16" fill="#8a6d3b" letter-spacing="4">EDIPROOF SOULBOUND CERTIFICATE</text>',
+            '<text x="300" y="158" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="22" fill="#5a1a1a" letter-spacing="3">',
+            _escapeXML(c.courseName),
+            "</text>",
+            '<text x="300" y="218" text-anchor="middle" font-family="Georgia,serif" font-size="32" fill="#1a1a1a">',
+            _escapeXML(c.studentName),
+            "</text>",
+            '<text x="300" y="296" text-anchor="middle" font-family="Georgia,serif" font-size="16" fill="#3a2618">',
+            _escapeXML(c.institution),
+            "</text>",
+            '<text x="300" y="346" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="12" fill="#8a6d3b" letter-spacing="2">Token #',
+            Strings.toString(tokenId),
+            "</text>",
+            revokedStamp,
+            "</svg>"
+        );
+    }
+
+    function _ipfsToGateway(string memory uri) private pure returns (string memory) {
+        bytes memory b = bytes(uri);
+        bytes memory prefix = bytes("ipfs://");
+        if (b.length < prefix.length) return uri;
+        for (uint256 i = 0; i < prefix.length; i++) {
+            if (b[i] != prefix[i]) return uri;
+        }
+        bytes memory rest = new bytes(b.length - prefix.length);
+        for (uint256 i = 0; i < rest.length; i++) {
+            rest[i] = b[i + prefix.length];
+        }
+        return string.concat("https://gateway.pinata.cloud/ipfs/", string(rest));
+    }
+
+    function _escapeJSON(string memory s) private pure returns (string memory) {
+        bytes memory b = bytes(s);
+        // Worst case every byte needs escaping (\X), so reserve 2x.
+        bytes memory out = new bytes(b.length * 2);
+        uint256 j = 0;
+        for (uint256 i = 0; i < b.length; i++) {
+            bytes1 ch = b[i];
+            if (ch == '"' || ch == "\\") {
+                out[j++] = "\\";
+                out[j++] = ch;
+            } else if (uint8(ch) < 0x20) {
+                // Control characters: drop them. Demo data is plain ASCII.
+                continue;
+            } else {
+                out[j++] = ch;
+            }
+        }
+        bytes memory trimmed = new bytes(j);
+        for (uint256 i = 0; i < j; i++) {
+            trimmed[i] = out[i];
+        }
+        return string(trimmed);
+    }
+
+    function _escapeXML(string memory s) private pure returns (string memory) {
+        bytes memory b = bytes(s);
+        // Worst case '&' → '&amp;' (5 bytes), reserve 6x.
+        bytes memory out = new bytes(b.length * 6);
+        uint256 j = 0;
+        for (uint256 i = 0; i < b.length; i++) {
+            bytes1 ch = b[i];
+            if (ch == "<") {
+                out[j++] = "&"; out[j++] = "l"; out[j++] = "t"; out[j++] = ";";
+            } else if (ch == ">") {
+                out[j++] = "&"; out[j++] = "g"; out[j++] = "t"; out[j++] = ";";
+            } else if (ch == "&") {
+                out[j++] = "&"; out[j++] = "a"; out[j++] = "m"; out[j++] = "p"; out[j++] = ";";
+            } else if (ch == '"') {
+                out[j++] = "&"; out[j++] = "q"; out[j++] = "u"; out[j++] = "o"; out[j++] = "t"; out[j++] = ";";
+            } else if (ch == "'") {
+                out[j++] = "&"; out[j++] = "a"; out[j++] = "p"; out[j++] = "o"; out[j++] = "s"; out[j++] = ";";
+            } else {
+                out[j++] = ch;
+            }
+        }
+        bytes memory trimmed = new bytes(j);
+        for (uint256 i = 0; i < j; i++) {
+            trimmed[i] = out[i];
+        }
+        return string(trimmed);
     }
 
     // ---------------------------------------------------------------------
