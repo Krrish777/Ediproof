@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>Édiproof — Slide II · The Problem</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- one-off positioning for slide II only ---- */
+
+    .p-watermark {
+      position: absolute;
+      right: 96px;
+      top: 156px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 200;
+      font-size: 18rem;
+      line-height: 1;
+      color: var(--brass);
+      opacity: 0.07;
+      letter-spacing: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Headline + lede block */
+    .p-head { max-width: 1500px; margin-bottom: 30px; }
+    .p-head .display-deck { font-size: 5.4rem; }
+    .p-head .display-deck em { font-style: italic; color: var(--oxblood); font-weight: 300; }
+    .p-head .lede { margin-top: 20px; max-width: 1380px; font-size: 1.55rem; }
+
+    /* Stats row tightened to fit the slide vertically */
+    .p-stats { margin: 4px 0 32px; }
+    .p-stats .stat { padding: 22px 22px; }
+    .p-stats .stat-value { font-size: 4.4rem; }
+
+    /* Two-column body grid */
+    .p-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* Numbered failure-mode rows — compact ledger of three */
+    .p-modes { display: flex; flex-direction: column; gap: 14px; }
+    .p-mode {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 22px;
+      padding: 16px 22px 18px;
+      background: var(--vellum-2);
+      border: 1px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--vellum-3), 5px 5px 0 var(--ink);
+      align-items: start;
+    }
+    .p-mode-num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 2.6rem;
+      line-height: 0.85;
+      color: var(--brass);
+      text-align: right;
+      border-right: 1px solid var(--brass);
+      padding-right: 16px;
+      padding-top: 4px;
+    }
+    .p-mode-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+      margin-bottom: 4px;
+    }
+    .p-mode-title em { font-style: italic; color: var(--oxblood); }
+    .p-mode-body {
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      color: var(--ink-faded);
+      line-height: 1.5;
+    }
+
+    /* Right column marginalia — give it presence */
+    .p-marg {
+      padding: 30px 36px;
+      background: var(--vellum-2);
+      border-left: 1px solid var(--brass);
+      border-top: 1px solid rgba(21, 17, 13, 0.2);
+      border-right: 1px solid rgba(21, 17, 13, 0.2);
+      border-bottom: 1px solid rgba(21, 17, 13, 0.2);
+      transform: rotate(0.5deg);
+    }
+    .p-marg .label-deck { letter-spacing: 0.28em; margin-bottom: 14px; }
+    .p-marg .pull {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.55rem;
+      line-height: 1.32;
+      color: var(--ink-faded);
+    }
+    .p-marg .pull .em-ox { color: var(--oxblood); }
+    .p-marg .signoff {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: var(--brass);
+      margin-top: 16px;
+    }
+
+    .p-body { height: auto; }
+  </style>
+</head>
+<body>
+
+<section class="stage">
+
+  <!-- Faint watermark numeral -->
+  <div class="p-watermark">II</div>
+
+  <!-- ===== Slide masthead ===== -->
+  <header class="slide-masthead">
+    <span class="wordmark">ÉDI<span class="accent">proof</span></span>
+    <span class="issue">Vol. I &middot; Slide II &middot; The Problem</span>
+    <span class="pageno">II</span>
+  </header>
+
+  <!-- ===== Body ===== -->
+  <div class="slide-body p-body stagger">
+
+    <!-- Headline block -->
+    <div class="p-head">
+      <p class="label-deck" style="margin-bottom: 14px;">A Diagnosis &middot; In Four Numbers and Three Failures</p>
+      <h1 class="display-deck">Paper degrees were never a <em>security primitive</em>.</h1>
+      <p class="lede">
+        &ldquo;Three to fourteen percent of credential dossiers contain at least one
+        materially-altered document. Every solution paper has offered &mdash; watermarks,
+        embossed seals, holographic foil &mdash; has been defeated by cheaper printers.&rdquo;
+      </p>
+    </div>
+
+    <!-- Stats row -->
+    <div class="stats-row p-stats">
+      <div class="stat">
+        <span class="stat-label">Forgery rate</span>
+        <span class="stat-value">8&ndash;14%</span>
+        <span class="stat-foot">across audited credential dossiers</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Per credential check</span>
+        <span class="stat-value">$25&ndash;$80</span>
+        <span class="stat-foot">international background-check vendors</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Verification turnaround</span>
+        <span class="stat-value">Days</span>
+        <span class="stat-foot">registrar&apos;s office, business hours only</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Cryptographic guarantees</span>
+        <span class="stat-value">0</span>
+        <span class="stat-foot">PDFs offer none against tampering</span>
+      </div>
+    </div>
+
+    <!-- Two-column body grid -->
+    <div class="p-grid">
+
+      <!-- LEFT — three failure-mode rows -->
+      <div class="p-modes">
+
+        <article class="p-mode">
+          <div class="p-mode-num">I.</div>
+          <div>
+            <div class="p-mode-title">Manual telephone <em>verification</em>.</div>
+            <p class="p-mode-body">
+              Slow, expensive, business-hours only &mdash; and entirely dependent on the
+              goodwill and staffing of the registrar&apos;s office.
+            </p>
+          </div>
+        </article>
+
+        <article class="p-mode">
+          <div class="p-mode-num">II.</div>
+          <div>
+            <div class="p-mode-title">Centralised <em>digi-lockers</em>.</div>
+            <p class="p-mode-body">
+              Limited institutional coverage, occasional portal-level downtime, and a
+              bilateral signup requirement before any verification can occur.
+            </p>
+          </div>
+        </article>
+
+        <article class="p-mode">
+          <div class="p-mode-num">III.</div>
+          <div>
+            <div class="p-mode-title">Generic <em>NFT credentials</em>.</div>
+            <p class="p-mode-body">
+              Transferable by default &mdash; which makes them incoherent for degrees.
+              A degree that can be sold to another wallet is not a degree.
+            </p>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- RIGHT — editor's marginalia -->
+      <div class="p-marg">
+        <p class="label-deck">From the Editors</p>
+        <p class="pull">
+          &ldquo;The forgery of a diploma has always been a problem of <span class="em-ox">paper</span>.
+          &Eacute;diproof makes paper <span class="em-ox">obsolete</span>.&rdquo;
+        </p>
+        <div class="signoff">&mdash; Preface, Vol. I</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== Slide footer ===== -->
+  <footer class="slide-footer">
+    <span class="citation">report/01_synopsis.md &middot; 02_introduction.md &sect;1.2</span>
+    <span class="signature">&mdash; Vol. I &middot; Three counts: slow, expensive, forgery-friendly. &mdash;</span>
+  </footer>
+
+</section>
+
+</body>
+</html>

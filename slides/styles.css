@@ -1,0 +1,362 @@
+/* ================================================================
+   Édiproof — Slide Stage Stylesheet
+   Imports the project's archival design system and adds the
+   1920x1080 stage container + slide-level chrome.
+   ================================================================ */
+
+@import url('../design/styles.css');
+
+/* ----------------------------------------------------------------
+   Stage — every slide is one <section class="stage">
+   ---------------------------------------------------------------- */
+
+html, body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* Inherit vellum background + noise from design/styles.css body rule.
+     Override min-height so we sit exactly at the stage box. */
+  min-height: 1080px;
+}
+
+.stage {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  padding: 80px 120px;
+  overflow: hidden;
+}
+
+/* ----------------------------------------------------------------
+   Slide masthead — minimal, runs across the top of every slide
+   ---------------------------------------------------------------- */
+
+.slide-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 18px;
+  margin-bottom: 56px;
+}
+.slide-masthead .wordmark {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--ink);
+}
+.slide-masthead .wordmark .accent {
+  color: var(--oxblood);
+  font-style: italic;
+  font-weight: 300;
+}
+.slide-masthead .issue {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.slide-masthead .pageno {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--brass);
+  font-size: 1.6rem;
+  letter-spacing: 0.05em;
+}
+
+/* ----------------------------------------------------------------
+   Slide footer — citation strip at the bottom
+   ---------------------------------------------------------------- */
+
+.slide-footer {
+  position: absolute;
+  bottom: 60px;
+  left: 120px;
+  right: 120px;
+  border-top: 1px solid rgba(21, 17, 13, 0.2);
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-light);
+  letter-spacing: 0.04em;
+}
+.slide-footer .citation {
+  font-family: var(--font-mono);
+  color: var(--brass);
+  font-size: 0.72rem;
+  letter-spacing: 0;
+}
+.slide-footer .signature {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-faded);
+  letter-spacing: 0;
+}
+
+/* ----------------------------------------------------------------
+   Slide body — content area between masthead and footer
+   ---------------------------------------------------------------- */
+
+.slide-body {
+  height: calc(1080px - 80px - 80px - 90px - 80px);
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-body.center {
+  justify-content: center;
+}
+
+/* ----------------------------------------------------------------
+   Slide-level type sizing — slides need bigger display than the
+   editorial site, audiences are 5-10m from the screen.
+   ---------------------------------------------------------------- */
+
+.stage .display-hero {
+  font-family: var(--font-display);
+  font-weight: 200;
+  font-size: 9.5rem;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.stage .display-hero em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--oxblood);
+}
+
+.stage .display-deck {
+  font-family: var(--font-display);
+  font-weight: 200;
+  font-size: 6rem;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.stage .display-deck em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--oxblood);
+}
+
+.stage .display-mid {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 4rem;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.stage .display-mid em {
+  font-style: italic;
+  color: var(--oxblood);
+}
+
+.stage .lede {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 1.85rem;
+  line-height: 1.35;
+  color: var(--ink-faded);
+  font-style: italic;
+}
+
+.stage .body-large {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+.stage .label-deck {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--ink-faded);
+}
+
+/* ----------------------------------------------------------------
+   Slide-level adjustments to existing components
+   ---------------------------------------------------------------- */
+
+.stage .stat-value { font-size: 5.5rem; }
+.stage .stat-label { font-size: 0.78rem; }
+.stage .stat-foot { font-size: 0.85rem; }
+
+.stage .ledger th { font-size: 0.78rem; }
+.stage .ledger td { font-size: 1.05rem; padding: 18px 16px; }
+
+.stage .leaf {
+  padding: var(--space-8) var(--space-8) var(--space-10);
+}
+.stage .leaf .display-sm { font-size: 1.85rem; line-height: 1.15; }
+
+.stage .seal-xl {
+  width: 280px;
+  height: 280px;
+}
+.stage .seal-xl .seal-title { font-size: 0.9rem; }
+.stage .seal-xl .seal-main { font-size: 2.6rem; }
+.stage .seal-xl .seal-sub { font-size: 0.78rem; }
+
+/* Code blocks for the contract slide */
+
+.stage .code-block {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--vellum-2);
+  border: 1px solid var(--ink);
+  padding: var(--space-8);
+  white-space: pre;
+  position: relative;
+  box-shadow: 5px 5px 0 var(--vellum-3), 6px 6px 0 var(--ink);
+}
+.stage .code-block .kw { color: var(--oxblood); font-style: italic; }
+.stage .code-block .com { color: var(--ink-light); font-style: italic; }
+.stage .code-block .num { color: var(--brass); }
+.stage .code-block .str { color: var(--moss); }
+
+/* Mono chip — used for contract addresses, tx hashes, etc. */
+
+.stage .mono-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 8px 14px;
+  border: 1px solid var(--brass);
+  background: var(--vellum-2);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--ink);
+  letter-spacing: 0;
+  text-decoration: none;
+}
+.stage .mono-chip:hover {
+  border-color: var(--oxblood);
+  color: var(--oxblood);
+}
+.stage .mono-chip .chip-label {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  color: var(--ink-faded);
+  border-right: 1px solid var(--brass);
+  padding-right: var(--space-3);
+}
+
+/* Verdict cards (slide IX) */
+
+.stage .verdict {
+  border: 1px solid var(--ink);
+  background: var(--vellum-2);
+  padding: var(--space-6) var(--space-8);
+  position: relative;
+  box-shadow: 4px 4px 0 var(--vellum-3), 5px 5px 0 var(--ink);
+}
+.stage .verdict-valid    { border-color: var(--moss);    background: rgba(74, 93, 58, 0.06); }
+.stage .verdict-invalid  { border-color: var(--error);   background: rgba(160, 55, 46, 0.06); }
+.stage .verdict-revoked  { border-color: var(--oxblood); background: rgba(122, 31, 43, 0.06); }
+.stage .verdict-replaced { border-color: var(--brass);   background: rgba(138, 109, 59, 0.06); }
+.stage .verdict-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 2.4rem;
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: var(--space-4);
+}
+.stage .verdict-valid    .verdict-title { color: var(--moss); }
+.stage .verdict-invalid  .verdict-title { color: var(--error); }
+.stage .verdict-revoked  .verdict-title { color: var(--oxblood); }
+.stage .verdict-replaced .verdict-title { color: var(--brass); }
+.stage .verdict-body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink-faded);
+  line-height: 1.6;
+}
+
+/* Screenshot frames */
+
+.stage .screenshot {
+  border: 1px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--vellum-3), 7px 7px 0 var(--ink);
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--vellum-1);
+}
+.stage .screenshot-frame {
+  position: relative;
+  display: inline-block;
+}
+.stage .screenshot-caption {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-faded);
+  margin-top: var(--space-3);
+  text-align: center;
+}
+
+/* Numbered tier card (architecture slide) */
+
+.stage .tier {
+  background: var(--vellum-2);
+  border: 1px solid var(--ink);
+  padding: var(--space-8);
+  position: relative;
+  box-shadow: 5px 5px 0 var(--vellum-3), 6px 6px 0 var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.stage .tier-numeral {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 4rem;
+  line-height: 0.85;
+  color: var(--brass);
+}
+.stage .tier-title {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.stage .tier-title em { font-style: italic; color: var(--oxblood); }
+.stage .tier-body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink-faded);
+  line-height: 1.55;
+}
+.stage .tier-stack {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--brass);
+  line-height: 1.7;
+  border-top: 1px solid var(--brass);
+  padding-top: var(--space-3);
+  margin-top: auto;
+}

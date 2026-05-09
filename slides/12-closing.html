@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>Édiproof — Slide XII · Closing &middot; Limitations &amp; Future</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- one-off positioning for slide XII only ---- */
+
+    /* Faint roman numeral watermark — far right, behind the body */
+    .v-watermark {
+      position: absolute;
+      right: 96px;
+      top: 156px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 200;
+      font-size: 18rem;
+      line-height: 1;
+      color: var(--brass);
+      opacity: 0.07;
+      letter-spacing: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Headline */
+    .v-head { max-width: 1620px; margin-bottom: 28px; }
+    .v-head .display-deck { font-size: 5.2rem; }
+    .v-head .lede { margin-top: 14px; max-width: 1380px; font-size: 1.4rem; }
+    .v-head .lede em { color: var(--oxblood); }
+
+    /* Two-column body */
+    .v-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* Numbered item — based on the .v-act pattern from Slide VIII */
+    .v-list { display: flex; flex-direction: column; gap: 14px; margin-top: 14px; }
+    .v-act {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 20px;
+      padding: 16px 22px;
+      background: var(--vellum-2);
+      border: 1px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--vellum-3), 5px 5px 0 var(--ink);
+      align-items: start;
+    }
+    .v-act-num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 2.2rem;
+      line-height: 0.85;
+      color: var(--brass);
+      text-align: right;
+      border-right: 1px solid var(--brass);
+      padding-right: 14px;
+      padding-top: 4px;
+    }
+    .v-act-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+      margin-bottom: 4px;
+    }
+    .v-act-title em { font-style: italic; color: var(--oxblood); }
+    .v-act-body {
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: var(--ink-faded);
+      line-height: 1.5;
+    }
+    .v-act-body .cite {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--brass);
+      letter-spacing: 0;
+      margin-left: 4px;
+    }
+
+    /* Right column gets a faint oxblood accent on numerals to read as "the road ahead" */
+    .v-future .v-act { border-color: var(--ink); }
+    .v-future .v-act .v-act-num { color: var(--oxblood); border-right-color: var(--oxblood); }
+
+    /* Bottom strip: fleuron · final line · floating seal */
+    .v-close {
+      position: absolute;
+      left: 120px;
+      right: 120px;
+      bottom: 130px;
+      text-align: center;
+    }
+    .v-close .fleuron { padding: 4px 0 10px; font-size: 1.45rem; }
+    .v-close .final-line {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 2.6rem;
+      line-height: 1.1;
+      color: var(--oxblood);
+      letter-spacing: -0.01em;
+    }
+
+    /* Tilted seal in the bottom-right corner */
+    .stage .v-corner-seal {
+      position: absolute;
+      right: 110px;
+      bottom: 130px;
+      width: 180px;
+      height: 180px;
+      transform: rotate(-9deg);
+      z-index: 4;
+    }
+    .stage .v-corner-seal .seal-title { font-size: 0.65rem; }
+    .stage .v-corner-seal .seal-main { font-size: 1.6rem; }
+    .stage .v-corner-seal .seal-sub { font-size: 0.55rem; }
+
+    /* Tighten label spacing within columns */
+    .v-col .label-deck { letter-spacing: 0.28em; }
+    .v-col .col-sub {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.45rem;
+      color: var(--ink);
+      margin-top: 6px;
+      line-height: 1.2;
+    }
+    .v-col .col-sub em { color: var(--oxblood); }
+  </style>
+</head>
+<body>
+
+<section class="stage">
+
+  <!-- Faint watermark numeral -->
+  <div class="v-watermark">XII</div>
+
+  <!-- ===== Slide masthead ===== -->
+  <header class="slide-masthead">
+    <span class="wordmark">ÉDI<span class="accent">proof</span></span>
+    <span class="issue">Vol. I &middot; Slide XII &middot; Closing &mdash; Limitations &amp; Future</span>
+    <span class="pageno">XII</span>
+  </header>
+
+  <!-- ===== Body ===== -->
+  <div class="slide-body">
+
+    <!-- Headline -->
+    <div class="v-head">
+      <p class="label-deck" style="margin-bottom: 12px;">A Demonstration &middot; A Charter</p>
+      <h1 class="display-deck">A demonstration, <em>not a destination</em>.</h1>
+      <p class="lede">
+        It is a demonstration of an architecture, not a finished platform &mdash;
+        <em>and the road from here is concrete</em>.
+      </p>
+    </div>
+
+    <!-- Two columns -->
+    <div class="v-grid stagger">
+
+      <!-- ============ LEFT — Honest limitations ============ -->
+      <div class="v-col">
+        <p class="label-deck">Honest Limitations</p>
+        <p class="col-sub">What this project is <em>not</em>.</p>
+
+        <div class="v-list">
+
+          <article class="v-act">
+            <div class="v-act-num">I.</div>
+            <div>
+              <div class="v-act-title"><em>Sepolia testnet only.</em></div>
+              <p class="v-act-body">
+                No mainnet contract. No L2 deploy. No audit against mainnet
+                gas-cost expectations &mdash; explicitly out of scope for the
+                three-day demonstration build.
+              </p>
+            </div>
+          </article>
+
+          <article class="v-act">
+            <div class="v-act-num">II.</div>
+            <div>
+              <div class="v-act-title">Single-EOA <em>institution</em> model.</div>
+              <p class="v-act-body">
+                Each institution is one externally-owned account. No on-chain
+                multisig (Safe) for issuance authority; no rotation of a
+                compromised wallet without owner intervention.
+              </p>
+            </div>
+          </article>
+
+          <article class="v-act">
+            <div class="v-act-num">III.</div>
+            <div>
+              <div class="v-act-title">No <em>subgraph</em> indexer.</div>
+              <p class="v-act-body">
+                Listing operations enumerate every token via <span class="cite">eth_call</span>
+                &mdash; <em style="color: var(--oxblood); font-style: italic;">O(n)</em>
+                and slow at scale. A Graph subgraph that indexes the five contract
+                events would close this gap.
+              </p>
+            </div>
+          </article>
+
+          <article class="v-act">
+            <div class="v-act-num">IV.</div>
+            <div>
+              <div class="v-act-title">Front-end exercised <em>manually</em>.</div>
+              <p class="v-act-body">
+                No Playwright or Cypress regression suite. The fifteen-step
+                manual demonstration in Chapter 4 is the closest the project
+                comes to integrated UI tests.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- ============ RIGHT — Future Scope ============ -->
+      <div class="v-col v-future">
+        <p class="label-deck">Future Scope &middot; A Short Charter</p>
+        <p class="col-sub">The <em>road ahead</em>.</p>
+
+        <div class="v-list">
+
+          <article class="v-act">
+            <div class="v-act-num">I.</div>
+            <div>
+              <div class="v-act-title">Mainnet &amp; L2 deploy &mdash; <em>gas-optimised</em>.</div>
+              <p class="v-act-body">
+                Hash the strings off-chain rather than SSTOREing them; reconstruct
+                from IPFS at read time. Approximately <em style="color: var(--oxblood); font-style: italic;">70&thinsp;% per-issuance gas reduction</em>,
+                with L2 cutting another order of magnitude.
+                <span class="cite">&sect;5.4.1</span>
+              </p>
+            </div>
+          </article>
+
+          <article class="v-act">
+            <div class="v-act-num">II.</div>
+            <div>
+              <div class="v-act-title">Multi-signature institutions via <em>Safe</em>.</div>
+              <p class="v-act-body">
+                Replace <span class="cite">onlyApprovedInstitution</span> with a
+                check against <span class="cite">IERC1271.isValidSignature</span>
+                &mdash; M-of-N co-signers, no single registrar holding unilateral
+                issuance authority. <span class="cite">&sect;5.4.2</span>
+              </p>
+            </div>
+          </article>
+
+          <article class="v-act">
+            <div class="v-act-num">III.</div>
+            <div>
+              <div class="v-act-title">Zero-knowledge <em>revocation proofs</em>.</div>
+              <p class="v-act-body">
+                Batch revocations into a Merkle tree; publish only the root. A
+                verifier checks a certificate&apos;s status without learning the
+                status of any other. <span class="cite">&sect;5.4.7</span>
+              </p>
+            </div>
+          </article>
+
+          <article class="v-act">
+            <div class="v-act-num">IV.</div>
+            <div>
+              <div class="v-act-title">CI/CD &amp; <em>Playwright smoke tests</em>.</div>
+              <p class="v-act-body">
+                The lowest-cost-highest-value engineering item: GitHub Actions
+                running <span class="cite">npm test</span> on every PR plus a
+                full headless UI flow against Hardhat-localhost. Catches
+                ~90&thinsp;% of regressions before Sepolia. <span class="cite">&sect;5.4.10</span>
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Closing fleuron + final line -->
+    <div class="v-close">
+      <div class="fleuron">&sect; &nbsp; &middot; &nbsp; &sect;</div>
+      <p class="final-line">&mdash; Questions are most welcome &mdash;</p>
+    </div>
+
+    <!-- Tilted wax seal in the corner -->
+    <div class="seal v-corner-seal seal-animate">
+      <div class="seal-title">Sigillum</div>
+      <div class="seal-main">Édiproof</div>
+      <div class="seal-sub">Finis &middot; MMXXVI</div>
+    </div>
+
+  </div>
+
+  <!-- ===== Slide footer ===== -->
+  <footer class="slide-footer">
+    <span class="citation">report/06_conclusion_future.md &sect;5.3, &sect;5.4</span>
+    <span class="signature">&mdash; Vol. I &middot; A demonstration, not a destination. &mdash;</span>
+  </footer>
+
+</section>
+
+</body>
+</html>

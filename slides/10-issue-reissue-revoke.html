@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>Édiproof — Slide X · Issue · Reissue · Revoke</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- one-off positioning for slide X only ---- */
+
+    .x-watermark {
+      position: absolute;
+      right: 96px;
+      top: 156px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 200;
+      font-size: 18rem;
+      line-height: 1;
+      color: var(--brass);
+      opacity: 0.07;
+      letter-spacing: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .x-head { max-width: 1620px; margin-bottom: 26px; }
+    .x-head .display-deck { font-size: 5.2rem; }
+    .x-head .lede { margin-top: 14px; max-width: 1480px; font-size: 1.45rem; }
+    .x-head .lede em { color: var(--oxblood); }
+
+    /* 3-column screenshot grid */
+    .x-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 38px;
+      align-items: start;
+    }
+    .x-col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+
+    .x-col-head {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 16px;
+      align-items: baseline;
+      border-bottom: 1px solid var(--brass);
+      padding-bottom: 8px;
+    }
+    .x-col-num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 2.6rem;
+      line-height: 0.85;
+      color: var(--brass);
+      text-align: right;
+    }
+    .x-col-label {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: var(--ink-faded);
+      font-weight: 500;
+    }
+    .x-col-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.05;
+      margin-top: 2px;
+    }
+    .x-col-title em { font-style: italic; color: var(--oxblood); }
+
+    .x-shot-frame {
+      position: relative;
+      display: block;
+      margin-top: 4px;
+    }
+    .x-shot-frame .screenshot {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .x-cap {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.96rem;
+      color: var(--ink-faded);
+      line-height: 1.5;
+      text-align: left;
+      margin-top: 6px;
+    }
+    .x-cap code, .x-cap em.kw {
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-size: 0.82rem;
+      color: var(--ink);
+      background: rgba(138, 109, 59, 0.10);
+      padding: 1px 4px;
+    }
+
+    .x-cite {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--brass);
+      letter-spacing: 0;
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(138, 109, 59, 0.4);
+    }
+
+    /* Below the grid — fleuron + marginalia centered */
+    .x-foot-block {
+      margin-top: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .x-foot-block .fleuron {
+      padding: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.6em;
+    }
+    .x-foot-block .marginalia {
+      font-size: 0.96rem;
+      max-width: 1320px;
+      text-align: left;
+      border-left: 1px solid var(--brass);
+    }
+    .x-foot-block .marginalia em code {
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-size: 0.84rem;
+      color: var(--brass);
+      padding: 0 2px;
+    }
+
+    .x-body { height: auto; }
+  </style>
+</head>
+<body>
+
+<section class="stage">
+
+  <div class="x-watermark">X</div>
+
+  <header class="slide-masthead">
+    <span class="wordmark">ÉDI<span class="accent">proof</span></span>
+    <span class="issue">Vol. I &middot; Slide X &middot; Issue &middot; Reissue &middot; Revoke</span>
+    <span class="pageno">X</span>
+  </header>
+
+  <div class="slide-body x-body">
+
+    <div class="x-head">
+      <p class="label-deck" style="margin-bottom: 12px;">The Institution&rsquo;s Surface</p>
+      <h1 class="display-deck"><em>Three modes.</em> One form.</h1>
+      <p class="lede">
+        The institution&rsquo;s surface is a single page with three modes. <em>Issue</em> mints a new
+        soulbound token. <em>Reissue</em> burns the old token and mints a corrected one &mdash; with the
+        lineage preserved on-chain. <em>Revoke</em> flips a flag without burning.
+      </p>
+    </div>
+
+    <div class="x-grid stagger">
+
+      <!-- ============ I · ISSUE NEW ============ -->
+      <div class="x-col">
+        <div class="x-col-head">
+          <div class="x-col-num">I.</div>
+          <div>
+            <div class="x-col-label">Issue New</div>
+            <div class="x-col-title">A certificate <em>impressed</em> upon the chain.</div>
+          </div>
+        </div>
+
+        <div class="screenshot-frame x-shot-frame">
+          <img
+            src="assets/ui-issue-new.jpeg"
+            class="screenshot"
+            alt="Issue page — Issue New mode with live certificate hash" />
+        </div>
+
+        <p class="x-cap">
+          Student wallet, four fields, a PDF. The live <code>keccak256</code> fingerprint updates as the
+          registrar types &mdash; the same digest the contract will compute. One MetaMask signature
+          impresses the certificate upon the chain.
+        </p>
+
+        <div class="x-cite">issueCertificate(&hellip;) &middot; EdiproofCertificate.sol:85&ndash;114</div>
+      </div>
+
+      <!-- ============ II · REISSUE EXISTING ============ -->
+      <div class="x-col">
+        <div class="x-col-head">
+          <div class="x-col-num">II.</div>
+          <div>
+            <div class="x-col-label">Reissue Existing</div>
+            <div class="x-col-title">Burn the old, mint the new, <em>preserve the lineage</em>.</div>
+          </div>
+        </div>
+
+        <div class="screenshot-frame x-shot-frame">
+          <img
+            src="assets/ui-issue-reissue.jpeg"
+            class="screenshot"
+            alt="Issue page — Reissue Existing mode with old-token field and editorial sidebars" />
+        </div>
+
+        <p class="x-cap">
+          Old token id plus corrected fields. The contract burns the old token, mints a new one, and
+          writes <code>replacedBy[old]&nbsp;=&nbsp;new</code> &mdash; so a verifier presenting the stale
+          hash gets a deterministic <em>&ldquo;revoked, replaced by N&rdquo;</em> rather than a dead end.
+        </p>
+
+        <div class="x-cite">reissueCertificate(&hellip;) &middot; EdiproofCertificate.sol:126&ndash;176</div>
+      </div>
+
+      <!-- ============ III · REVOKE ============ -->
+      <div class="x-col">
+        <div class="x-col-head">
+          <div class="x-col-num">III.</div>
+          <div>
+            <div class="x-col-label">Revoke</div>
+            <div class="x-col-title">A <em>soft</em> withdrawal &mdash; the token endures.</div>
+          </div>
+        </div>
+
+        <div class="screenshot-frame x-shot-frame">
+          <img
+            src="assets/ui-issue-revoke.jpeg"
+            class="screenshot"
+            alt="Issue page — Revoke mode with simple token-id input and the Four Rules sidebar" />
+        </div>
+
+        <p class="x-cap">
+          A soft revoke. The token stays in the student&rsquo;s wallet but the <code>revoked</code> flag
+          flips. Verifiers see <code>valid = false, revoked = true</code>. Use <em>Reissue</em> when the
+          certificate must be physically replaced.
+        </p>
+
+        <div class="x-cite">revokeCertificate(&hellip;) &middot; EdiproofCertificate.sol:116&ndash;124</div>
+      </div>
+
+    </div>
+
+    <div class="x-foot-block">
+      <div class="fleuron">&#10086; &middot; &#10086; &middot; &#10086;</div>
+      <div class="marginalia">
+        <strong>From the Editors</strong>
+        <em>Reissue is the most distinctive lifecycle decision in the contract. Most credential systems
+        either soft-revoke (the bad version still exists) or hard-replace (the audit trail is lost).
+        &Eacute;diproof does both: it physically burns the old token while keeping its hash mapping with a
+        <code>replacedBy</code> link &mdash; correctness without amnesia.</em>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="slide-footer">
+    <span class="citation">EdiproofCertificate.sol:85&ndash;176 &middot; the institution&rsquo;s three modes</span>
+    <span class="signature">&mdash; Vol. I &middot; Three modes. One form. One signature each. &mdash;</span>
+  </footer>
+
+</section>
+
+</body>
+</html>

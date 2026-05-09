@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>Édiproof — Slide VI · System Architecture</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- one-off positioning for slide VI only ---- */
+
+    /* Faint roman numeral watermark, far right, behind the headline */
+    .a-watermark {
+      position: absolute;
+      right: 96px;
+      top: 156px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 200;
+      font-size: 18rem;
+      line-height: 1;
+      color: var(--brass);
+      opacity: 0.07;
+      letter-spacing: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Headline block — display-deck + lede beneath */
+    .a-head { max-width: 1500px; margin-bottom: 30px; }
+    .a-head .display-deck { font-size: 4.6rem; line-height: 1.02; }
+    .a-head .lede { margin-top: 14px; max-width: 1320px; font-size: 1.35rem; }
+    .a-head .lede em { color: var(--oxblood); font-style: italic; }
+
+    /* Three-tier grid */
+    .a-tiers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    /* Tighten the .tier component for the slide */
+    .stage .a-tiers .tier { padding: 22px 26px 20px; gap: 10px; }
+    .stage .a-tiers .tier-numeral { font-size: 2.8rem; }
+    .stage .a-tiers .tier-title { font-size: 1.4rem; line-height: 1.15; }
+    .stage .a-tiers .tier-body { font-size: 0.92rem; line-height: 1.55; }
+    .stage .a-tiers .tier-stack {
+      font-size: 0.78rem;
+      line-height: 1.5;
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+
+    /* Marginalia inside each tier (between body and stack) */
+    .a-tiers .tier .marginalia {
+      font-size: 0.85rem;
+      line-height: 1.45;
+      padding-left: 14px;
+      margin: 4px 0 6px;
+    }
+
+    /* Two-row data flow strip beneath the tier grid */
+    .a-flows {
+      margin-top: 26px;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding: 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .a-flow {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      align-items: baseline;
+      gap: 24px;
+    }
+    .a-flow-label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: var(--ink-faded);
+    }
+    .a-flow-path {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+    .a-flow-path .arr { color: var(--brass); padding: 0 6px; }
+    /* Verify flow rendered louder + oxblood to dramatise its brevity */
+    .a-flow-verify .a-flow-label { color: var(--oxblood); }
+    .a-flow-verify .a-flow-path  { color: var(--oxblood); font-weight: 500; }
+    .a-flow-verify .a-flow-path .arr { color: var(--oxblood); }
+    .a-flow-verify .a-flow-path .tail {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink-faded);
+      padding-left: 14px;
+      font-weight: 400;
+    }
+
+    /* Pull body up so footer can breathe at 1080 */
+    .a-body { height: auto; }
+  </style>
+</head>
+<body>
+
+<section class="stage">
+
+  <!-- Faint watermark numeral -->
+  <div class="a-watermark">VI</div>
+
+  <!-- ===== Slide masthead ===== -->
+  <header class="slide-masthead">
+    <span class="wordmark">ÉDI<span class="accent">proof</span></span>
+    <span class="issue">Vol. I &middot; Slide VI &middot; System Architecture</span>
+    <span class="pageno">VI</span>
+  </header>
+
+  <!-- ===== Body ===== -->
+  <div class="slide-body a-body">
+
+    <!-- Headline block -->
+    <div class="a-head">
+      <p class="label-deck" style="margin-bottom: 12px;">The Three-Tier Block Diagram</p>
+      <h1 class="display-deck">Three tiers, <em>loosely coupled.</em></h1>
+      <p class="lede">
+        If the backend dies, verification still works. If Pinata is down, old certificates still verify. The
+        chain is the only mandatory part &mdash; <em>the rest is orchestration.</em>
+      </p>
+    </div>
+
+    <!-- Three tier cards -->
+    <div class="a-tiers stagger">
+
+      <article class="tier">
+        <div class="tier-numeral">I.</div>
+        <div class="tier-title">The <em>Browser.</em><br/>Where roles meet code.</div>
+        <p class="tier-body">
+          Three role-specific surfaces &mdash; institution issuance, student portfolio, public verifier.
+          Two are wallet-gated. The third (the verifier) deliberately is not. EIP-6963 multi-wallet
+          discovery defeats the OKX/MetaMask injection conflict.
+        </p>
+        <div class="marginalia">
+          <em>Two of three pages need a wallet. The verifier deliberately doesn&rsquo;t.</em>
+        </div>
+        <div class="tier-stack">
+          Next.js 14 &middot; React 18 &middot; Ethers v6<br/>
+          MetaMask &middot; EIP-6963
+        </div>
+      </article>
+
+      <article class="tier">
+        <div class="tier-numeral">II.</div>
+        <div class="tier-title">The <em>Backend.</em><br/>Convenience, not authority.</div>
+        <p class="tier-body">
+          Six Express routes on port 8787. SQLite (WAL mode) holds an event-log table &mdash; for
+          analytics only. The Pinata JWT lives server-side and never touches the browser. Take this
+          layer offline and verification still works.
+        </p>
+        <div class="marginalia">
+          <em>Convenience layer. Take it offline and verification still works.</em>
+        </div>
+        <div class="tier-stack">
+          Express 4 &middot; better-sqlite3<br/>
+          Pinata V3 proxy &middot; multer
+        </div>
+      </article>
+
+      <article class="tier">
+        <div class="tier-numeral">III.</div>
+        <div class="tier-title">The <em>Chain.</em><br/>The source of truth.</div>
+        <p class="tier-body">
+          A single Solidity 0.8.28 contract on Sepolia at <span class="mono" style="font-size: 0.9rem; color: var(--ink);">0x14Cf&hellip;64d5</span>. It stores the
+          <span class="mono" style="font-size: 0.9rem; color: var(--ink);">Certificate</span> struct + the keccak256 anchor. IPFS holds the file itself, content-addressed.
+          Together they constitute the full proof.
+        </p>
+        <div class="marginalia">
+          <em>The contract is the source of truth. Everything above is orchestration.</em>
+        </div>
+        <div class="tier-stack">
+          Solidity 0.8.28 &middot; OpenZeppelin v5<br/>
+          Sepolia &middot; Pinata IPFS
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Data-flow strip -->
+    <div class="a-flows">
+      <div class="a-flow a-flow-issue">
+        <span class="a-flow-label">Issue Flow</span>
+        <span class="a-flow-path">
+          Browser <span class="arr">&rarr;</span> Backend <span class="arr">&rarr;</span> Pinata
+          <span class="arr">&rarr;</span> MetaMask <span class="arr">&rarr;</span> Sepolia
+          <span class="arr">&rarr;</span> Browser
+        </span>
+      </div>
+      <div class="a-flow a-flow-verify">
+        <span class="a-flow-label">Verify Flow</span>
+        <span class="a-flow-path">
+          Browser <span class="arr">&rarr;</span> Sepolia (read-only RPC) <span class="arr">&rarr;</span> Browser
+          <span class="tail">&mdash; no backend, no wallet, no signature.</span>
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== Slide footer ===== -->
+  <footer class="slide-footer">
+    <span class="citation">report/03_design.md &sect;2.1 &middot; 02_introduction.md &sect;1.4</span>
+    <span class="signature">&mdash; Vol. I &middot; The chain is the only mandatory part. &mdash;</span>
+  </footer>
+
+</section>
+
+</body>
+</html>

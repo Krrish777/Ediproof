@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>Édiproof — Slide VIII · The Wallet-less Verifier</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- one-off positioning for slide VIII only ---- */
+
+    /* Ghosted roman numeral, far right, behind the headline */
+    .v-watermark {
+      position: absolute;
+      right: 96px;
+      top: 156px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 200;
+      font-size: 18rem;
+      line-height: 1;
+      color: var(--brass);
+      opacity: 0.07;
+      letter-spacing: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Headline block — display-deck + lede beneath */
+    .v-head { max-width: 1500px; margin-bottom: 38px; }
+    .v-head .display-deck { font-size: 5.4rem; }
+    .v-head .lede { margin-top: 18px; max-width: 1320px; font-size: 1.55rem; }
+    .v-head .lede em { color: var(--oxblood); }
+
+    /* Two-column body grid */
+    .v-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* Left column — 3 stacked tier cards in a vertical sequence */
+    .v-acts { display: flex; flex-direction: column; gap: 18px; }
+    .v-act {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 24px;
+      padding: 22px 26px;
+      background: var(--vellum-2);
+      border: 1px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--vellum-3), 5px 5px 0 var(--ink);
+      align-items: start;
+    }
+    .v-act-num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 3.1rem;
+      line-height: 0.85;
+      color: var(--brass);
+      text-align: right;
+      border-right: 1px solid var(--brass);
+      padding-right: 18px;
+      padding-top: 4px;
+    }
+    .v-act-title {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .v-act-title em { font-style: italic; color: var(--oxblood); }
+    .v-act-body {
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      color: var(--ink-faded);
+      line-height: 1.55;
+    }
+    .v-act-cite {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--brass);
+      letter-spacing: 0;
+      margin-top: 9px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(138, 109, 59, 0.4);
+    }
+
+    .v-marg {
+      margin-top: 22px;
+      max-width: 760px;
+    }
+
+    /* Right column — screenshot + caption */
+    .v-screenshot-col {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .v-screenshot-col .label-deck {
+      letter-spacing: 0.28em;
+    }
+    .v-screenshot-frame {
+      position: relative;
+      display: block;
+    }
+    .v-screenshot-frame .screenshot {
+      width: 100%;
+      height: auto;
+    }
+    .v-screenshot-caption {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.02rem;
+      color: var(--ink-faded);
+      line-height: 1.45;
+      margin-top: 10px;
+      max-width: 100%;
+    }
+    .v-screenshot-caption code {
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-size: 0.9rem;
+      color: var(--brass);
+      padding: 0 2px;
+    }
+
+    /* Mono chip strip beneath the screenshot — three signals of "no wallet" */
+    .v-chips {
+      display: flex;
+      gap: 14px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+    .v-chips .mono-chip { font-size: 0.82rem; padding: 6px 12px; }
+    .v-chips .mono-chip .chip-label { font-size: 0.6rem; }
+
+    /* Tighten body height so footer breathes */
+    .v-body { height: auto; }
+  </style>
+</head>
+<body>
+
+<section class="stage">
+
+  <!-- Faint watermark numeral -->
+  <div class="v-watermark">VIII</div>
+
+  <!-- ===== Slide masthead ===== -->
+  <header class="slide-masthead">
+    <span class="wordmark">ÉDI<span class="accent">proof</span></span>
+    <span class="issue">Vol. I &middot; Slide VIII &middot; The Wallet-less Verifier</span>
+    <span class="pageno">VIII</span>
+  </header>
+
+  <!-- ===== Body ===== -->
+  <div class="slide-body v-body">
+
+    <!-- Headline block -->
+    <div class="v-head">
+      <p class="label-deck" style="margin-bottom: 14px;">The Headline Contribution</p>
+      <h1 class="display-deck">The Wallet-<em>less</em> Verifier.</h1>
+      <p class="lede">
+        An HR coordinator with no wallet, no MetaMask, no crypto experience &mdash; opens the page,
+        fills four fields, gets the verdict. <em>That is the whole architecture.</em>
+      </p>
+    </div>
+
+    <!-- Two-column grid -->
+    <div class="v-grid stagger">
+
+      <!-- ======== LEFT — three numbered acts ======== -->
+      <div>
+        <div class="v-acts">
+
+          <article class="v-act">
+            <div class="v-act-num">I.</div>
+            <div>
+              <div class="v-act-title">The Page <em>loads</em>.</div>
+              <p class="v-act-body">
+                No wallet check. No MetaMask prompt. The verifier hits <span class="mono" style="font-size: 0.9rem; color: var(--ink);">/verify</span>
+                and the form is simply <em style="color: var(--oxblood); font-style: italic;">there</em> &mdash; the WalletGate is deliberately omitted from this route alone.
+              </p>
+              <div class="v-act-cite">frontend/src/app/verify/page.tsx &middot; no &lt;WalletGate&gt; wrap</div>
+            </div>
+          </article>
+
+          <article class="v-act">
+            <div class="v-act-num">II.</div>
+            <div>
+              <div class="v-act-title">The Ledger <em>listens</em>.</div>
+              <p class="v-act-body">
+                The browser opens a read-only RPC channel to Sepolia via <span class="mono" style="font-size: 0.9rem; color: var(--ink);">ethers.JsonRpcProvider</span>
+                against a public Alchemy endpoint. No private key is involved. The contract&apos;s
+                <span class="mono" style="font-size: 0.9rem; color: var(--ink);">verifyCertificate(&hellip;)</span> is
+                <em style="color: var(--oxblood); font-style: italic;">view</em>&nbsp;&mdash;&nbsp;it costs nothing to call.
+              </p>
+              <div class="v-act-cite">EdiproofCertificate.sol:182&ndash;208 &middot; useContract.ts:17&ndash;20</div>
+            </div>
+          </article>
+
+          <article class="v-act">
+            <div class="v-act-num">III.</div>
+            <div>
+              <div class="v-act-title">The Verdict <em>returns</em>.</div>
+              <p class="v-act-body">
+                The contract recomputes <span class="mono" style="font-size: 0.9rem; color: var(--ink);">keccak256(abi.encodePacked(name, course, institution, ipfsURI))</span>,
+                looks the digest up in the <span class="mono" style="font-size: 0.9rem; color: var(--ink);">hashToTokenId</span> map, and returns the tuple
+                <span class="mono" style="font-size: 0.9rem; color: var(--ink);">(valid, tokenId, ownerAddr, revoked, replacedByTokenId)</span>.
+                Four states. One call. No signature.
+              </p>
+              <div class="v-act-cite">EdiproofCertificate.sol:399&ndash;406 &middot; the four verdict possibilities</div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Editor's marginalia -->
+        <div class="marginalia v-marg">
+          <strong>From the Editors</strong>
+          <em>Why this matters: 90% of credential verifiers will never own a wallet. A verifier path that needs one is operationally dead on arrival.</em>
+        </div>
+      </div>
+
+      <!-- ======== RIGHT — screenshot ======== -->
+      <div class="v-screenshot-col">
+        <p class="label-deck">What the verifier sees</p>
+
+        <div class="screenshot-frame v-screenshot-frame">
+          <img
+            src="assets/ui-verify-by-details.jpeg"
+            class="screenshot"
+            alt="Édiproof verifier page — By Details tab" />
+        </div>
+
+        <p class="v-screenshot-caption screenshot-caption" style="text-align: left;">
+          The verifier page &mdash; the <code>By Details</code> tab. The four fields produce a live
+          keccak256 hash; submitting against the chain returns a verdict in under a second.
+        </p>
+
+        <div class="v-chips">
+          <span class="mono-chip">
+            <span class="chip-label">Provider</span>
+            ethers.JsonRpcProvider
+          </span>
+          <span class="mono-chip">
+            <span class="chip-label">Cost</span>
+            0 gas &middot; view-only
+          </span>
+          <span class="mono-chip">
+            <span class="chip-label">Wallet</span>
+            not required
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== Slide footer ===== -->
+  <footer class="slide-footer">
+    <span class="citation">EdiproofCertificate.sol:182&ndash;208 &middot; useContract.ts:17&ndash;20 &middot; ethers.JsonRpcProvider</span>
+    <span class="signature">&mdash; Vol. I &middot; No wallet, no signature, no gas. &mdash;</span>
+  </footer>
+
+</section>
+
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>Édiproof — Slide IX · The Four Verdicts</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- one-off positioning for slide IX only ---- */
+
+    .ix-watermark {
+      position: absolute;
+      right: 96px;
+      top: 156px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 200;
+      font-size: 18rem;
+      line-height: 1;
+      color: var(--brass);
+      opacity: 0.07;
+      letter-spacing: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .ix-head { max-width: 1620px; margin-bottom: 28px; }
+    .ix-head .display-deck { font-size: 5.2rem; }
+    .ix-head .lede { margin-top: 14px; max-width: 1320px; font-size: 1.45rem; }
+    .ix-head .lede em { color: var(--oxblood); }
+    .ix-head .lede code {
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-size: 1.05rem;
+      color: var(--ink);
+      padding: 0 2px;
+      background: rgba(138, 109, 59, 0.10);
+    }
+
+    /* 2x2 verdict grid */
+    .ix-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 26px;
+    }
+    .ix-grid .verdict {
+      padding: 22px 28px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 0;
+    }
+    .ix-grid .verdict-label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: var(--ink-faded);
+      font-weight: 500;
+    }
+    .ix-grid .verdict-title {
+      font-size: 2.05rem;
+      margin-bottom: 2px;
+      letter-spacing: -0.01em;
+    }
+    .ix-grid .verdict-body {
+      font-size: 0.98rem;
+      line-height: 1.55;
+      color: var(--ink-faded);
+    }
+    .ix-grid .verdict-body code {
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      color: var(--ink);
+      background: rgba(138, 109, 59, 0.10);
+      padding: 1px 4px;
+    }
+    .ix-grid .verdict-meta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 8px;
+    }
+    .ix-grid .verdict-meta .mono-chip {
+      font-size: 0.78rem;
+      padding: 5px 10px;
+    }
+    .ix-grid .verdict-meta .mono-chip .chip-label { font-size: 0.58rem; }
+
+    /* The bottom-left revoked card has the screenshot */
+    .ix-revoked-card { padding: 18px 22px 18px; }
+    .ix-revoked-shot {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--vellum-3), 5px 5px 0 var(--ink);
+      max-height: 235px;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .ix-revoked-shot-cap {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--ink-faded);
+      line-height: 1.4;
+    }
+    .ix-revoked-shot-cap code {
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-size: 0.78rem;
+      color: var(--brass);
+      padding: 0 2px;
+    }
+
+    /* The flip-detail (top-right) chip strip showing John -> Jhon */
+    .ix-flip {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .ix-flip .mono-chip { font-size: 0.78rem; padding: 5px 10px; }
+    .ix-flip .mono-chip .chip-label { font-size: 0.58rem; }
+    .ix-flip .arrow {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--brass);
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+    .ix-flip .strike {
+      text-decoration: line-through;
+      text-decoration-color: var(--error);
+      text-decoration-thickness: 1px;
+    }
+
+    /* Footer marginalia row */
+    .ix-foot-marg {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin-top: 18px;
+      max-width: 1680px;
+    }
+    .ix-foot-marg .fleuron {
+      padding: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.6em;
+      flex: 0 0 auto;
+    }
+    .ix-foot-marg .marginalia {
+      font-size: 0.92rem;
+      max-width: 1500px;
+    }
+
+    .ix-body { height: auto; }
+  </style>
+</head>
+<body>
+
+<section class="stage">
+
+  <div class="ix-watermark">IX</div>
+
+  <header class="slide-masthead">
+    <span class="wordmark">ÉDI<span class="accent">proof</span></span>
+    <span class="issue">Vol. I &middot; Slide IX &middot; The Four Verdicts</span>
+    <span class="pageno">IX</span>
+  </header>
+
+  <div class="slide-body ix-body">
+
+    <div class="ix-head">
+      <p class="label-deck" style="margin-bottom: 12px;">The Live Demo, Frozen</p>
+      <h1 class="display-deck">Four states. <em>One call.</em></h1>
+      <p class="lede">
+        Submit four fields. Receive one of four answers. Watch what happens when you change a single
+        letter &mdash; <code>John</code> becomes <code>Jhon</code> and the verdict flips.
+        <em>There is no middle ground.</em>
+      </p>
+    </div>
+
+    <div class="ix-grid stagger">
+
+      <!-- ============ I · VALID (top-left) ============ -->
+      <article class="verdict verdict-valid">
+        <span class="verdict-label">I &middot; The genuine article</span>
+        <h2 class="verdict-title">Valid.</h2>
+        <p class="verdict-body">
+          Original four fields submitted. Hash matches the digest stored at mint. Token <code>#142</code>
+          owned by <code>0xAbC&hellip;7890</code>. Certificate authentic, not revoked, not replaced.
+        </p>
+        <div class="verdict-meta">
+          <span class="pill pill-active">Active</span>
+          <span class="mono-chip">
+            <span class="chip-label">tokenId</span>
+            142
+          </span>
+          <span class="mono-chip">
+            <span class="chip-label">return</span>
+            valid = true
+          </span>
+        </div>
+      </article>
+
+      <!-- ============ II · NOT FOUND — single-letter flip (top-right) ============ -->
+      <article class="verdict verdict-invalid">
+        <span class="verdict-label">II &middot; A single-letter tamper</span>
+        <h2 class="verdict-title">Not&nbsp;Found.</h2>
+        <p class="verdict-body">
+          Same fields, except <code>John</code> &rarr; <code>Jhon</code>. The
+          <code>keccak256</code> diverges entirely; no record exists in the
+          <code>hashToTokenId</code> map. Verdict in milliseconds.
+        </p>
+        <div class="ix-flip">
+          <span class="mono-chip">
+            <span class="chip-label">genuine</span>
+            <span>name: 'John&nbsp;Doe'</span>
+          </span>
+          <span class="arrow">&rarr;</span>
+          <span class="mono-chip">
+            <span class="chip-label">tampered</span>
+            <span class="strike">name: 'Jhon&nbsp;Doe'</span>
+          </span>
+        </div>
+      </article>
+
+      <!-- ============ III · REVOKED — with screenshot (bottom-left) ============ -->
+      <article class="verdict verdict-revoked ix-revoked-card">
+        <span class="verdict-label">III &middot; The token was withdrawn</span>
+        <h2 class="verdict-title" style="margin-bottom: 4px;">Revoked.</h2>
+        <img
+          src="assets/ui-verify-by-token-revoked.jpeg"
+          class="ix-revoked-shot"
+          alt="Verifier By-Token tab — cert #4 Happu/CSE/DCE stamped REVOKED" />
+        <p class="ix-revoked-shot-cap">
+          The <code>By Token N&deg;</code> tab returns cert <code>N&deg; 4</code> &mdash;
+          <em>Happu &middot; CSE &middot; DCE</em> &mdash; stamped <em>REVOKED</em>.
+          The token is still on-chain; the certificate is no longer valid.
+        </p>
+        <div class="verdict-meta" style="padding-top: 4px;">
+          <span class="pill pill-revoked">Revoked</span>
+          <span class="mono-chip">
+            <span class="chip-label">return</span>
+            revoked = true
+          </span>
+        </div>
+      </article>
+
+      <!-- ============ IV · REPLACED (bottom-right) ============ -->
+      <article class="verdict verdict-replaced">
+        <span class="verdict-label">IV &middot; The audit trail traverses lineage</span>
+        <h2 class="verdict-title">Revoked &middot; <em>Replaced by token N.</em></h2>
+        <p class="verdict-body">
+          Original token burned. New token issued via reissue. A verifier presenting the stale hash
+          receives a useful answer &mdash; <code>revoked = true, replacedByTokenId = 2</code> &mdash;
+          rather than a dead end. The chain remembers the correction.
+        </p>
+        <div class="verdict-meta">
+          <span class="pill pill-reissued">Reissued</span>
+          <span class="mono-chip">
+            <span class="chip-label">mapping</span>
+            replacedBy[old] = new
+          </span>
+          <span class="mono-chip">
+            <span class="chip-label">cite</span>
+            EdiproofCertificate.sol:165
+          </span>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="ix-foot-marg">
+      <div class="fleuron">&#10086; &middot; &#10086; &middot; &#10086;</div>
+      <div class="marginalia">
+        <strong>From the Editors</strong>
+        <em>Hash sensitivity is byte-tight. The smallest possible tamper &mdash; a one-character
+        transposition &mdash; is enough to invalidate. The test at <code style="font-style: normal; font-family: var(--font-mono); color: var(--brass); font-size: 0.85rem;">test:241&ndash;260</code>
+        locks this property down: change a byte, lose the certificate.</em>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="slide-footer">
+    <span class="citation">EdiproofCertificate.sol:182&ndash;208 &middot; test:241&ndash;260, :316&ndash;350</span>
+    <span class="signature">&mdash; Vol. I &middot; Four states. One call. No middle ground. &mdash;</span>
+  </footer>
+
+</section>
+
+</body>
+</html>

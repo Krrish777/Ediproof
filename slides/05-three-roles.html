@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>Édiproof — Slide V · The Three Roles (the Rite)</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- one-off positioning for slide V only ---- */
+
+    /* Faint roman numeral, far right, behind the headline */
+    .v-watermark {
+      position: absolute;
+      right: 96px;
+      top: 156px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 200;
+      font-size: 18rem;
+      line-height: 1;
+      color: var(--brass);
+      opacity: 0.07;
+      letter-spacing: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Headline block */
+    .v-head { max-width: 1620px; margin-bottom: 30px; }
+    .v-head .display-deck { font-size: 5.4rem; }
+    .v-head .lede { margin-top: 16px; max-width: 1480px; font-size: 1.4rem; }
+    .v-head .lede em { color: var(--oxblood); }
+
+    /* Four-card leaf grid */
+    .v-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+    .stage .v-grid .leaf {
+      padding: 26px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .stage .v-grid .leaf .label {
+      font-style: italic;
+      letter-spacing: 0.18em;
+      color: var(--brass);
+    }
+    .stage .v-grid .leaf .card-title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.7rem;
+      line-height: 1.12;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin-top: 4px;
+    }
+    .stage .v-grid .leaf .card-title em {
+      font-style: italic;
+      color: var(--oxblood);
+    }
+    .stage .v-grid .leaf .card-body {
+      font-family: var(--font-body);
+      font-size: 0.96rem;
+      line-height: 1.55;
+      color: var(--ink-faded);
+      margin-top: 4px;
+    }
+    .stage .v-grid .leaf .rule-brass { margin: 14px 0 10px; }
+    .stage .v-grid .leaf .card-cite {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--brass);
+      letter-spacing: 0;
+      line-height: 1.5;
+      margin-top: auto;
+    }
+    .stage .v-grid .leaf .card-cite .file {
+      display: block;
+      font-size: 0.68rem;
+      color: var(--ink-light);
+      margin-top: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    /* The fourth card — slight oxblood emphasis to mark "the most important role" */
+    .stage .v-grid .leaf-observer {
+      border-color: var(--oxblood);
+      box-shadow:
+        0 1px 0 rgba(21, 17, 13, 0.1),
+        5px 5px 0 var(--vellum-3),
+        6px 6px 0 var(--oxblood);
+    }
+    .stage .v-grid .leaf-observer .label { color: var(--oxblood); }
+
+    /* Closing fleuron + marginalia */
+    .v-close { margin-top: 18px; }
+    .v-close .fleuron { padding: 6px 0 8px; font-size: 1.4rem; }
+    .v-close .closing-marg {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.35rem;
+      line-height: 1.4;
+      color: var(--ink-faded);
+      text-align: center;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .v-close .closing-marg em { color: var(--oxblood); font-style: italic; }
+  </style>
+</head>
+<body>
+
+<section class="stage">
+
+  <!-- Faint watermark numeral -->
+  <div class="v-watermark">V</div>
+
+  <!-- ===== Slide masthead ===== -->
+  <header class="slide-masthead">
+    <span class="wordmark">ÉDI<span class="accent">proof</span></span>
+    <span class="issue">Vol. I &middot; Slide V &middot; The Three Roles &mdash; the Rite</span>
+    <span class="pageno">V</span>
+  </header>
+
+  <!-- ===== Body ===== -->
+  <div class="slide-body">
+
+    <!-- Headline block -->
+    <div class="v-head">
+      <p class="label-deck" style="margin-bottom: 12px;">A Three-Act Rite &middot; &amp; an Observer</p>
+      <h1 class="display-deck">How a certificate is <em>impressed</em>.</h1>
+      <p class="lede">
+        A three-act rite: an institution attests, the chain witnesses, a student holds.
+        A fourth observer &mdash; the verifier &mdash; consults what the chain has recorded.
+        <em>Each act is recorded in ink that cannot be rewritten.</em>
+      </p>
+    </div>
+
+    <!-- Four-card grid -->
+    <div class="v-grid stagger">
+
+      <!-- ===== Card I — The Institution attests ===== -->
+      <article class="leaf">
+        <div class="leaf-corner"></div>
+        <div class="label">Act the First</div>
+        <h3 class="card-title">The Institution <em>attests</em>.</h3>
+        <p class="card-body">
+          A pre-approved institution opens the ledger, fills the four fields, and
+          uploads the PDF. A single signature in MetaMask impresses the certificate
+          upon the chain.
+        </p>
+        <div class="rule-brass"></div>
+        <div class="card-cite">
+          issueCertificate(student, name, course, institution, ipfs)
+          <span class="file">EdiproofCertificate.sol:85&ndash;114</span>
+        </div>
+      </article>
+
+      <!-- ===== Card II — The Chain witnesses ===== -->
+      <article class="leaf">
+        <div class="leaf-corner"></div>
+        <div class="label">Act the Second</div>
+        <h3 class="card-title">The Chain <em>witnesses</em>.</h3>
+        <p class="card-body">
+          A keccak256 hash is cast from the four fields and stored beside the token id.
+          Tampering with any byte produces a different hash &mdash; the forgery becomes
+          instantly legible.
+        </p>
+        <div class="rule-brass"></div>
+        <div class="card-cite">
+          keccak256(abi.encodePacked(&hellip;))
+          <span class="file">EdiproofCertificate.sol:399&ndash;406, 410&ndash;420</span>
+        </div>
+      </article>
+
+      <!-- ===== Card III — The Student holds ===== -->
+      <article class="leaf">
+        <div class="leaf-corner"></div>
+        <div class="label">Act the Third</div>
+        <h3 class="card-title">The Student <em>holds</em>.</h3>
+        <p class="card-body">
+          The certificate is minted as a soulbound token to the student&apos;s wallet.
+          It cannot be sold, traded, or transferred. It is theirs alone, for as long
+          as the chain endures.
+        </p>
+        <div class="rule-brass"></div>
+        <div class="card-cite">
+          _update(&hellip;) reverts on transfer
+          <span class="file">EdiproofCertificate.sol:410&ndash;420</span>
+        </div>
+      </article>
+
+      <!-- ===== Card IV — The Verifier consults ===== -->
+      <article class="leaf leaf-observer">
+        <div class="leaf-corner"></div>
+        <div class="label">An Observer</div>
+        <h3 class="card-title">The Verifier <em>consults</em>.</h3>
+        <p class="card-body">
+          Anyone, with no wallet, may submit the four fields and receive the verdict.
+          This is the only role with no MetaMask requirement &mdash; and the most
+          important role of all.
+        </p>
+        <div class="rule-brass"></div>
+        <div class="card-cite">
+          verifyCertificate(&hellip;) &middot; view function
+          <span class="file">EdiproofCertificate.sol:182&ndash;208</span>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Closing fleuron + centered marginalia line -->
+    <div class="v-close">
+      <div class="fleuron">&sect; &nbsp; &middot; &nbsp; &sect;</div>
+      <p class="closing-marg">
+        &ldquo;The verifier is the only role with no wallet.
+        <em>That asymmetry is the entire architecture.</em>&rdquo;
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ===== Slide footer ===== -->
+  <footer class="slide-footer">
+    <span class="citation">EdiproofCertificate.sol &sect; 85&ndash;208 &middot; &sect; 410&ndash;420</span>
+    <span class="signature">&mdash; Vol. I &middot; A three-act rite, and an observer. &mdash;</span>
+  </footer>
+
+</section>
+
+</body>
+</html>

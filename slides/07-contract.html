@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>Édiproof — Slide VII · Inside the Contract</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- one-off positioning for slide VII only ---- */
+
+    /* Faint roman numeral watermark, far right, behind the headline */
+    .c-watermark {
+      position: absolute;
+      right: 96px;
+      top: 156px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 200;
+      font-size: 18rem;
+      line-height: 1;
+      color: var(--brass);
+      opacity: 0.07;
+      letter-spacing: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Headline block */
+    .c-head { max-width: 1500px; margin-bottom: 30px; }
+    .c-head .display-deck { font-size: 4.4rem; line-height: 1.02; }
+    .c-head .lede { margin-top: 14px; max-width: 1380px; font-size: 1.32rem; }
+    .c-head .lede em { color: var(--oxblood); font-style: italic; }
+    .c-head .lede code,
+    .c-head .lede .mono-inline {
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-size: 1.12rem;
+      color: var(--ink);
+    }
+
+    /* Two-column body grid */
+    .c-grid {
+      display: grid;
+      grid-template-columns: 1.18fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    /* Code block — the hero of this slide */
+    .stage .c-code {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      padding: 26px 28px 26px 30px;
+      position: relative;
+    }
+    .c-code .file-header {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: var(--ink-faded);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(138, 109, 59, 0.4);
+      white-space: normal;
+    }
+    .c-code .file-header .path {
+      font-family: var(--font-mono);
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--brass);
+      font-size: 0.78rem;
+    }
+    /* The five-line condition — emphasised with a brass left rule */
+    .c-code .heart {
+      display: block;
+      border-left: 3px solid var(--brass);
+      padding-left: 12px;
+      margin-left: -15px;
+      background: rgba(138, 109, 59, 0.06);
+    }
+    .c-code .heart-marker {
+      position: absolute;
+      left: 8px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 0.78rem;
+      color: var(--brass);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Right column — three editorial notes */
+    .c-notes { display: flex; flex-direction: column; gap: 16px; }
+    .c-note {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 20px;
+      padding: 18px 22px;
+      background: var(--vellum-2);
+      border: 1px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--vellum-3), 5px 5px 0 var(--ink);
+      align-items: start;
+    }
+    .c-note-num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 2.6rem;
+      line-height: 0.85;
+      color: var(--brass);
+      text-align: right;
+      border-right: 1px solid var(--brass);
+      padding-right: 14px;
+      padding-top: 4px;
+    }
+    .c-note-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .c-note-title em { font-style: italic; color: var(--oxblood); }
+    .c-note-body {
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: var(--ink-faded);
+      line-height: 1.55;
+    }
+    .c-note-body .mono-inline {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--ink);
+    }
+    .c-note-cite {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--brass);
+      letter-spacing: 0;
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(138, 109, 59, 0.4);
+    }
+
+    /* Marginalia anchored low-left, beneath the code */
+    .c-marg {
+      margin-top: 18px;
+      max-width: 760px;
+    }
+
+    .c-body { height: auto; }
+  </style>
+</head>
+<body>
+
+<section class="stage">
+
+  <!-- Faint watermark numeral -->
+  <div class="c-watermark">VII</div>
+
+  <!-- ===== Slide masthead ===== -->
+  <header class="slide-masthead">
+    <span class="wordmark">ÉDI<span class="accent">proof</span></span>
+    <span class="issue">Vol. I &middot; Slide VII &middot; Inside the Contract</span>
+    <span class="pageno">VII</span>
+  </header>
+
+  <!-- ===== Body ===== -->
+  <div class="slide-body c-body">
+
+    <!-- Headline block -->
+    <div class="c-head">
+      <p class="label-deck" style="margin-bottom: 12px;">The Soulbound Override</p>
+      <h1 class="display-deck">Five lines of code. The whole &lsquo;<em>soulbound</em>&rsquo; guarantee.</h1>
+      <p class="lede">
+        OpenZeppelin&rsquo;s ERC-721 funnels every transfer through a single hook called <code>_update</code>.
+        Override that hook with one condition &mdash; and the token becomes <em>non-transferable, forever,</em>
+        against every present and future transfer surface.
+      </p>
+    </div>
+
+    <!-- Two-column body -->
+    <div class="c-grid stagger">
+
+      <!-- ============ LEFT — code block ============ -->
+      <div>
+        <pre class="code-block c-code"><span class="file-header">Source &middot; <span class="path">contracts/contracts/EdiproofCertificate.sol:410&ndash;420</span></span><span class="com">// _update — OpenZeppelin's single transfer chokepoint</span>
+<span class="kw">function</span> _update(
+    <span class="kw">address</span> to,
+    <span class="kw">uint256</span> tokenId,
+    <span class="kw">address</span> auth
+) <span class="kw">internal override returns</span> (<span class="kw">address</span>) {
+<span class="heart"><span class="heart-marker">&#9670;</span>    <span class="kw">address</span> from = _ownerOf(tokenId);
+    <span class="kw">if</span> (from != <span class="kw">address</span>(<span class="num">0</span>) &amp;&amp; to != <span class="kw">address</span>(<span class="num">0</span>)) {
+        <span class="kw">revert</span> SoulboundTransferBlocked();
+    }
+</span>    <span class="kw">return super</span>._update(to, tokenId, auth);
+}</pre>
+
+        <!-- Editorial marginalia anchored beneath -->
+        <div class="marginalia c-marg">
+          <strong>From the Editors</strong>
+          <em>The minimalism is the contribution. A soulbound implementation small enough to be audited at a glance.</em>
+        </div>
+      </div>
+
+      <!-- ============ RIGHT — three notes ============ -->
+      <div class="c-notes">
+
+        <article class="c-note">
+          <div class="c-note-num">I.</div>
+          <div>
+            <div class="c-note-title">What it <em>allows.</em></div>
+            <p class="c-note-body">
+              Mint <span class="mono-inline">(from == 0)</span>. Burn <span class="mono-inline">(to == 0)</span>.
+              Both pass through unchallenged. Every certificate must enter the world, and a few must leave it
+              &mdash; for revocation and reissuance. Those two doors stay open.
+            </p>
+          </div>
+        </article>
+
+        <article class="c-note">
+          <div class="c-note-num">II.</div>
+          <div>
+            <div class="c-note-title">What it <em>forbids.</em></div>
+            <p class="c-note-body">
+              Every other transfer. <span class="mono-inline">safeTransferFrom</span>,
+              <span class="mono-inline">transferFrom</span>, future ERC-721 extensions &mdash; all blocked at the
+              same chokepoint, with the custom error <span class="mono-inline">SoulboundTransferBlocked()</span>.
+            </p>
+            <div class="c-note-cite">EdiproofCertificate.sol:55 &middot; custom error declared</div>
+          </div>
+        </article>
+
+        <article class="c-note">
+          <div class="c-note-num">III.</div>
+          <div>
+            <div class="c-note-title">Why it <em>works.</em></div>
+            <p class="c-note-body">
+              OpenZeppelin funnels every transfer &mdash; present and future &mdash; through
+              <span class="mono-inline">_update</span>. Block the hook, block every surface. Five lines defends
+              against every transfer path the standard will ever have.
+            </p>
+            <div class="c-note-cite">test:119&ndash;141 &middot; the guarantee is locked in by test</div>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== Slide footer ===== -->
+  <footer class="slide-footer">
+    <span class="citation">EdiproofCertificate.sol:410&ndash;420 &middot; test:119&ndash;141</span>
+    <span class="signature">&mdash; Vol. I &middot; Five lines. One chokepoint. Forever. &mdash;</span>
+  </footer>
+
+</section>
+
+</body>
+</html>

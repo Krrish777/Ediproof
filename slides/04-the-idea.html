@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>Édiproof — Slide IV · The Idea, in one sentence</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- one-off positioning for slide IV only ---- */
+
+    .i-watermark {
+      position: absolute;
+      right: 96px;
+      top: 130px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 200;
+      font-size: 22rem;
+      line-height: 1;
+      color: var(--brass);
+      opacity: 0.07;
+      letter-spacing: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* The whole slide centres on the pull-quote headline. */
+    .i-body {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 38px;
+      padding-top: 8px;
+    }
+
+    .i-head { max-width: 1680px; }
+    .i-head .label-deck { margin-bottom: 18px; letter-spacing: 0.32em; }
+    .i-head .display-hero {
+      font-size: 8.6rem;
+      line-height: 0.96;
+      letter-spacing: -0.035em;
+    }
+    .i-head .display-hero em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--oxblood);
+    }
+    .i-head .display-hero .line + .line { display: block; margin-top: 6px; }
+
+    /* The keccak code block, sized for stage legibility. */
+    .i-code {
+      align-self: flex-start;
+      max-width: 1100px;
+      width: 1100px;
+      font-size: 1.45rem !important;
+      line-height: 1.6 !important;
+      padding: 28px 36px !important;
+    }
+    .i-code .com { color: var(--ink-light); font-style: italic; }
+
+    /* Below-code explanation — italic editorial */
+    .i-explain {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.7rem;
+      line-height: 1.35;
+      color: var(--ink-faded);
+      max-width: 1320px;
+    }
+    .i-explain em { color: var(--oxblood); font-style: italic; }
+
+    /* Mono-chip strip anchored above the footer */
+    .i-chips {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+    .i-chips .mono-chip { font-size: 0.95rem; padding: 9px 16px; }
+    .i-chips .mono-chip .chip-label { font-size: 0.68rem; }
+
+    /* Two-column row holding code (left) and explanation (right) */
+    .i-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+  </style>
+</head>
+<body>
+
+<section class="stage">
+
+  <!-- Faint watermark numeral -->
+  <div class="i-watermark">IV</div>
+
+  <!-- ===== Slide masthead ===== -->
+  <header class="slide-masthead">
+    <span class="wordmark">ÉDI<span class="accent">proof</span></span>
+    <span class="issue">Vol. I &middot; Slide IV &middot; The Idea, in one sentence</span>
+    <span class="pageno">IV</span>
+  </header>
+
+  <!-- ===== Body ===== -->
+  <div class="slide-body i-body stagger">
+
+    <!-- Pull-quote headline -->
+    <div class="i-head">
+      <p class="label-deck">The Whole Project &middot; In Six Words</p>
+      <h1 class="display-hero">
+        <span class="line">Diplomas, <em>hashed</em>.</span>
+        <span class="line">Held for <em>good</em>.</span>
+      </h1>
+    </div>
+
+    <!-- Code block + brief explanation row -->
+    <div class="i-row">
+      <pre class="code-block i-code"><span class="kw">keccak256</span>(abi.encodePacked(
+    studentName,
+    courseName,
+    institution,
+    ipfsURI
+)) &rarr; <span class="kw">bytes32</span> certHash<span class="com">  // the on-chain anchor</span></pre>
+
+      <p class="i-explain">
+        Four fields go in. A 32-byte fingerprint comes out. Change one letter &mdash;
+        even one comma &mdash; and the fingerprint changes. There is no
+        <em>almost match</em> &mdash; the certificate is either authentic or it is not.
+      </p>
+    </div>
+
+    <!-- Mono chip strip -->
+    <div class="i-chips">
+      <span class="mono-chip">
+        <span class="chip-label">Algorithm</span>
+        keccak256 &middot; SHA-3 family
+      </span>
+      <span class="mono-chip">
+        <span class="chip-label">Output</span>
+        bytes32 &middot; 256-bit digest
+      </span>
+      <span class="mono-chip">
+        <span class="chip-label">Sensitivity</span>
+        1 byte &rarr; entirely different hash
+      </span>
+    </div>
+
+  </div>
+
+  <!-- ===== Slide footer ===== -->
+  <footer class="slide-footer">
+    <span class="citation">EdiproofCertificate.sol:399&ndash;406</span>
+    <span class="signature">&mdash; Vol. I &middot; Four fields in. One fingerprint out. &mdash;</span>
+  </footer>
+
+</section>
+
+</body>
+</html>

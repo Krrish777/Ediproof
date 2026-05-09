@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>Édiproof — Slide I · Cover</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- one-off positioning for the cover only ---- */
+
+    /* Top bar: just a wordmark on the left, roman numeral on the right.
+       Keeps the cover quiet — no border like the standard slide-masthead. */
+    .cover-bar {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--ink);
+      margin-bottom: 70px;
+    }
+    .cover-bar .wordmark {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--ink);
+    }
+    .cover-bar .wordmark .accent {
+      color: var(--oxblood);
+      font-style: italic;
+      font-weight: 300;
+    }
+    .cover-bar .issue-line {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-faded);
+      text-transform: uppercase;
+    }
+    .cover-bar .pageno {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--brass);
+      font-size: 2.2rem;
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+
+    /* Two-column hero. Generous left, intimate right. */
+    .cover-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 110px;
+      align-items: start;
+    }
+
+    /* Wordmark title — match the landing's ÉDI/proof oxblood italic break. */
+    .cover-title {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: 11rem;
+      line-height: 0.9;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      margin: 4px 0 22px;
+    }
+    .cover-title .accent {
+      color: var(--oxblood);
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .cover-tagline {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 2.35rem;
+      line-height: 1.2;
+      color: var(--ink-faded);
+      max-width: 22ch;
+      margin-bottom: 18px;
+    }
+    .cover-longtitle {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--ink-light);
+      max-width: 56ch;
+      letter-spacing: 0.005em;
+    }
+
+    /* Authors row — three columns, ruled top + bottom. */
+    .authors {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding: 22px 0 24px;
+      margin-top: 44px;
+    }
+    .author { display: flex; flex-direction: column; gap: 6px; }
+    .author .name {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+    }
+    .author .roll {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--brass);
+      letter-spacing: 0.02em;
+    }
+
+    /* Guide + institution — two-column ledger of placeholder facts. */
+    .colophon-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      margin-top: 28px;
+    }
+    .colophon-pair .label-deck { margin-bottom: 8px; }
+    .colophon-pair .item-body {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.25rem;
+      line-height: 1.4;
+      color: var(--ink-faded);
+    }
+    .colophon-pair .placeholder {
+      letter-spacing: 0.04em;
+      color: var(--ink-light);
+    }
+
+    .date-line {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.5rem;
+      color: var(--brass);
+      margin-top: 28px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Right column — seal floats, marginalia tucks beneath. */
+    .cover-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 56px;
+      padding-top: 30px;
+    }
+    .cover-right .seal-xl { width: 320px; height: 320px; }
+    .cover-right .seal-xl .seal-main { font-size: 3rem; }
+
+    .cover-right .leaf {
+      transform: rotate(0.6deg);
+      max-width: 380px;
+      padding: 28px 32px;
+    }
+    .cover-right .leaf .pull {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.35rem;
+      line-height: 1.35;
+      color: var(--ink-faded);
+    }
+    .cover-right .leaf .signoff {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: var(--brass);
+      margin-top: 16px;
+    }
+
+    /* Bottom strip of mono chips — sits anchored to the bottom of the stage. */
+    .cover-chips {
+      position: absolute;
+      left: 120px;
+      right: 120px;
+      bottom: 70px;
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      padding-top: 22px;
+      border-top: 1px solid var(--ink);
+    }
+    .cover-chips .signature {
+      margin-left: auto;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink-faded);
+      letter-spacing: 0;
+    }
+
+    /* Watermark roman numeral, faint, far right. */
+    .cover-watermark {
+      position: absolute;
+      right: 120px;
+      top: 230px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 200;
+      font-size: 14rem;
+      line-height: 1;
+      color: var(--brass);
+      opacity: 0.08;
+      letter-spacing: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+<section class="stage">
+
+  <!-- Watermark numeral, ghosted -->
+  <div class="cover-watermark">I</div>
+
+  <!-- Quiet top bar: wordmark · issue line · numeral -->
+  <div class="cover-bar">
+    <span class="wordmark">ÉDI<span class="accent">proof</span></span>
+    <span class="issue-line">Vol. I &middot; № I &middot; Cover &middot; Sepolia &middot; MMXXVI</span>
+    <span class="pageno">I</span>
+  </div>
+
+  <div class="cover-grid">
+
+    <!-- ============== LEFT COLUMN ============== -->
+    <div class="stagger">
+
+      <p class="label-deck">A Project Report &middot; Submitted in Partial Fulfilment</p>
+
+      <h1 class="cover-title ink-reveal">ÉDI<span class="accent">proof</span></h1>
+
+      <p class="cover-tagline">The Ledger of Verified Learning.</p>
+
+      <p class="cover-longtitle">
+        A Blockchain-Based Academic Certificate Verification DApp using
+        Soulbound Tokens on the Ethereum Sepolia Testnet.
+      </p>
+
+      <!-- Authors -->
+      <div>
+        <p class="label-deck" style="margin-top: 38px;">Authored by</p>
+        <div class="authors">
+          <div class="author">
+            <span class="name">Punit Kumar Chandrul</span>
+            <span class="roll">Roll № 26542</span>
+          </div>
+          <div class="author">
+            <span class="name">Abhishek Chadha</span>
+            <span class="roll">Roll № 26496</span>
+          </div>
+          <div class="author">
+            <span class="name">Gaurav Sharma</span>
+            <span class="roll">Roll № 26513</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guide + Institution -->
+      <div class="colophon-pair">
+        <div>
+          <p class="label-deck">Under the Guidance of</p>
+          <p class="item-body">Prof. <span class="placeholder">——————————</span></p>
+        </div>
+        <div>
+          <p class="label-deck">Department &amp; Institution</p>
+          <p class="item-body">
+            Department of Computer Science &amp; Engineering<br>
+            <span class="placeholder">&lt;Name of College &middot; University&gt;</span>
+          </p>
+        </div>
+      </div>
+
+      <p class="date-line">— April 2026 —</p>
+    </div>
+
+    <!-- ============== RIGHT COLUMN ============== -->
+    <div class="cover-right">
+      <div class="seal seal-xl seal-animate">
+        <div class="seal-title">Sigillum Academicum</div>
+        <div class="seal-main">Édiproof</div>
+        <div class="seal-sub">MMXXVI · VERITAS</div>
+      </div>
+
+      <div class="leaf">
+        <p class="label" style="margin-bottom: 10px;">From the Editors</p>
+        <p class="pull">
+          &ldquo;Impressed in ink that cannot be unwritten — a diploma made of
+          mathematics, not paper.&rdquo;
+        </p>
+        <div class="signoff">— Preface, Vol. I</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom strip — three mono chips of technical legitimacy -->
+  <div class="cover-chips">
+    <span class="mono-chip">
+      <span class="chip-label">Contract</span>
+      0x14Cf&hellip;64d5
+    </span>
+    <span class="mono-chip">
+      <span class="chip-label">Standard</span>
+      ERC-721 &middot; SBT
+    </span>
+    <span class="mono-chip">
+      <span class="chip-label">Chain</span>
+      Sepolia Testnet &middot; 11155111
+    </span>
+    <span class="signature">— Slide I of XII —</span>
+  </div>
+
+</section>
+
+</body>
+</html>

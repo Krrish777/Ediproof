@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>Édiproof — Slide XI · Testing &amp; Deployment</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- one-off positioning for slide XI only ---- */
+
+    .xi-watermark {
+      position: absolute;
+      right: 96px;
+      top: 156px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 200;
+      font-size: 18rem;
+      line-height: 1;
+      color: var(--brass);
+      opacity: 0.07;
+      letter-spacing: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .xi-head { max-width: 1500px; margin-bottom: 22px; }
+    .xi-head .display-deck { font-size: 4.6rem; }
+    .xi-head .lede { margin-top: 14px; max-width: 1380px; font-size: 1.4rem; }
+
+    /* Stats row sized for the slide */
+    .stage .xi-stats .stat-value { font-size: 4.4rem; }
+    .stage .xi-stats .stat        { padding: 22px 22px; }
+    .stage .xi-stats .stat-foot   { font-size: 0.78rem; }
+    .stage .xi-stats .stat-label  { font-size: 0.7rem; }
+
+    /* Ledger tightened to fit alongside other elements */
+    .stage .ledger.xi-ledger th {
+      padding: 12px 16px;
+      font-size: 0.72rem;
+    }
+    .stage .ledger.xi-ledger td {
+      padding: 14px 16px;
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+    .xi-ledger col.col-num    { width: 64px; }
+    .xi-ledger col.col-group  { width: 280px; }
+    .xi-ledger col.col-locks  { width: auto; }
+    .xi-ledger col.col-cite   { width: 200px; }
+
+    .xi-ledger td.numeral {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--brass);
+      font-size: 1.65rem;
+      line-height: 1;
+      padding-top: 16px;
+    }
+    .xi-ledger td.group {
+      font-family: var(--font-display);
+      font-weight: 400;
+      color: var(--ink);
+      font-size: 1.1rem;
+      line-height: 1.25;
+    }
+    .xi-ledger td.group em {
+      font-style: italic;
+      color: var(--oxblood);
+    }
+    .xi-ledger td.locks {
+      color: var(--ink-faded);
+    }
+    .xi-ledger td.locks code {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--ink);
+      padding: 0 2px;
+    }
+    .xi-ledger td.locks em {
+      font-style: italic;
+      color: var(--oxblood);
+    }
+    .xi-ledger td.cite {
+      font-family: var(--font-mono);
+      color: var(--brass);
+      font-size: 0.86rem;
+      letter-spacing: 0;
+    }
+
+    /* Bottom — deployment artefact panel */
+    .xi-deploy {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 32px;
+      align-items: center;
+      padding: 22px 28px;
+      background: var(--vellum-2);
+      border: 1px solid var(--ink);
+      box-shadow: 5px 5px 0 var(--vellum-3), 6px 6px 0 var(--ink);
+    }
+    .xi-deploy-label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border-right: 1px solid var(--brass);
+      padding-right: 28px;
+    }
+    .xi-deploy-label .label-deck {
+      letter-spacing: 0.28em;
+    }
+    .xi-deploy-label .deploy-title {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.55rem;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .xi-deploy-mid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .stage .xi-deploy-mid .mono-chip.address {
+      font-size: 1.2rem;
+      padding: 12px 18px;
+      align-self: flex-start;
+      border-width: 1px;
+      letter-spacing: 0;
+    }
+    .stage .xi-deploy-mid .mono-chip.address .chip-label {
+      font-size: 0.65rem;
+    }
+    .xi-deploy-mid .deploy-cite {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--ink-light);
+      letter-spacing: 0;
+    }
+    .xi-deploy-mid .deploy-cite em {
+      font-style: italic;
+      color: var(--brass);
+    }
+    .xi-deploy-side {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      text-align: right;
+    }
+    .stage .xi-deploy-side .pill {
+      font-size: 0.7rem;
+      padding: 5px 10px;
+      letter-spacing: 0.22em;
+    }
+    .xi-deploy-side .ts {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--ink-faded);
+    }
+    .xi-deploy-side .ts-label {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--ink-light);
+    }
+
+    .xi-body { height: auto; }
+  </style>
+</head>
+<body>
+
+<section class="stage">
+
+  <!-- Faint watermark numeral -->
+  <div class="xi-watermark">XI</div>
+
+  <!-- ===== Slide masthead ===== -->
+  <header class="slide-masthead">
+    <span class="wordmark">ÉDI<span class="accent">proof</span></span>
+    <span class="issue">Vol. I &middot; Slide XI &middot; Testing &amp; Deployment</span>
+    <span class="pageno">XI</span>
+  </header>
+
+  <!-- ===== Body ===== -->
+  <div class="slide-body xi-body">
+
+    <!-- Headline -->
+    <div class="xi-head">
+      <p class="label-deck" style="margin-bottom: 12px;">The Verification of the Verification</p>
+      <h1 class="display-deck">What &lsquo;verified&rsquo; means, in <em>twenty assertions</em>.</h1>
+      <p class="lede">
+        Twenty unit tests across nine describe blocks pin down the contract&rsquo;s behaviour. The
+        deployment artefact is independently re-verifiable on Etherscan &mdash; every claim made in
+        this deck can be checked against the live chain.
+      </p>
+    </div>
+
+    <div class="stagger">
+
+      <!-- TOP — stats row -->
+      <div class="stats-row xi-stats">
+        <div class="stat">
+          <span class="stat-label">Tests</span>
+          <span class="stat-value">20</span>
+          <span class="stat-foot">across nine describe blocks</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Describe blocks</span>
+          <span class="stat-value">9</span>
+          <span class="stat-foot">Mocha suites in test file</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Wall time</span>
+          <span class="stat-value">8.7s</span>
+          <span class="stat-foot">single laptop, fresh fixtures</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Failures</span>
+          <span class="stat-value">0</span>
+          <span class="stat-foot">as of deploy on 2026-04-19</span>
+        </div>
+      </div>
+
+      <!-- MIDDLE — the four most consequential test groups -->
+      <table class="ledger xi-ledger" style="margin-top: 22px;">
+        <colgroup>
+          <col class="col-num" />
+          <col class="col-group" />
+          <col class="col-locks" />
+          <col class="col-cite" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Group</th>
+            <th>What it locks in</th>
+            <th>File:line</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="numeral">I.</td>
+            <td class="group">Soulbound <em>enforcement</em></td>
+            <td class="locks">Even the student cannot transfer their own certificate; transfers revert with <code>SoulboundTransferBlocked()</code> &mdash; the central <em>non-transferability</em> invariant.</td>
+            <td class="cite">test:119&ndash;141</td>
+          </tr>
+          <tr>
+            <td class="numeral">II.</td>
+            <td class="group">Hash <em>sensitivity</em></td>
+            <td class="locks">One transposed letter (<code>Jhon</code> vs <code>John</code>) returns <code>valid=false</code>; tamper-evidence is <em>byte-tight</em>, not approximate.</td>
+            <td class="cite">test:241&ndash;260</td>
+          </tr>
+          <tr>
+            <td class="numeral">III.</td>
+            <td class="group">Reissue <em>burns</em> + lineage</td>
+            <td class="locks">Old token physically burned; <code>replacedBy[old] = new</code>; a verifier presenting the old hash receives <em>&ldquo;revoked, replaced by N&rdquo;</em>, not a confusing &ldquo;not found&rdquo;.</td>
+            <td class="cite">test:286&ndash;350</td>
+          </tr>
+          <tr>
+            <td class="numeral">IV.</td>
+            <td class="group"><code style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--ink);">tokenURI</code> integrity</td>
+            <td class="locks">Even a name with embedded <code>"</code> and <code>\</code> produces a valid JSON URI &mdash; the SVG render <em>survives</em> malicious inputs.</td>
+            <td class="cite">test:354&ndash;458</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- BOTTOM — deployment artefact panel -->
+      <div class="xi-deploy">
+        <div class="xi-deploy-label">
+          <span class="label-deck">Deployed contract</span>
+          <span class="deploy-title">Sepolia &middot; live</span>
+        </div>
+        <div class="xi-deploy-mid">
+          <a class="mono-chip address"
+             href="https://sepolia.etherscan.io/address/0x14Cf79F1ef984db755f0803E215FB12038Ad64d5"
+             target="_blank" rel="noopener">
+            <span class="chip-label">Address</span>
+            0x14Cf79F1ef984db755f0803E215FB12038Ad64d5
+          </a>
+          <span class="deploy-cite">
+            <em>deploy tx</em> &middot; 0xfaa818b3&hellip;2b09ceb6
+          </span>
+        </div>
+        <div class="xi-deploy-side">
+          <span class="pill pill-active">VERIFIED &middot; LIVE</span>
+          <span class="ts-label">Timestamp</span>
+          <span class="ts">2026-04-19T06:38:37Z</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ===== Slide footer ===== -->
+  <footer class="slide-footer">
+    <span class="citation">EdiproofCertificate.test.ts (504 lines) &middot; contracts/deployments/sepolia.json</span>
+    <span class="signature">&mdash; Vol. I &middot; Twenty assertions, zero failures, one live address. &mdash;</span>
+  </footer>
+
+</section>
+
+</body>
+</html>

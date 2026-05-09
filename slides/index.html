@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Édiproof · The Ledger of Verified Learning · 12-Slide Deck</title>
+<!--
+  index.html — multi-file slide aggregator for the Édiproof deck.
+  Each slide is a self-contained 1920×1080 HTML file that imports styles.css
+  (which itself imports ../design/styles.css from the project's design system).
+
+  Keyboard: ← → / Space / PgUp PgDown / Home End / 1-9 / P (print).
+  Click left/right edge of the screen to navigate.
+-->
+
+<script>
+  window.DECK_MANIFEST = [
+    { file: "01-cover.html",                label: "I · Cover" },
+    { file: "02-problem.html",              label: "II · The Problem" },
+    { file: "03-existing-solutions.html",   label: "III · Why existing solutions fall short" },
+    { file: "04-the-idea.html",             label: "IV · The Idea" },
+    { file: "05-three-roles.html",          label: "V · Three Roles" },
+    { file: "06-architecture.html",         label: "VI · Architecture" },
+    { file: "07-contract.html",             label: "VII · Inside the Contract" },
+    { file: "08-verifier.html",             label: "VIII · The Wallet-less Verifier" },
+    { file: "09-four-verdicts.html",        label: "IX · Four Verdicts" },
+    { file: "10-issue-reissue-revoke.html", label: "X · Issue · Reissue · Revoke" },
+    { file: "11-testing-deployment.html",   label: "XI · Testing & Deployment" },
+    { file: "12-closing.html",              label: "XII · Closing" },
+  ];
+
+  window.DECK_WIDTH = 1920;
+  window.DECK_HEIGHT = 1080;
+</script>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: #1a1612;
+    overflow: hidden;
+    font-family: 'IBM Plex Serif', Georgia, serif;
+  }
+  #stage {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform-origin: top left;
+    will-change: transform;
+    background: #f4ecd8;
+    box-shadow: 0 16px 80px rgba(0,0,0,0.5);
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: #f4ecd8;
+  }
+  .counter {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    background: rgba(15, 12, 8, 0.7);
+    color: #f4ecd8;
+    padding: 8px 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    z-index: 100;
+    user-select: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    border: 1px solid rgba(244, 236, 216, 0.2);
+  }
+  .counter:hover { opacity: 1; }
+  .counter .label {
+    color: rgba(244, 236, 216, 0.55);
+    margin-left: 12px;
+    font-style: italic;
+    font-family: 'Newsreader', serif;
+    font-size: 13px;
+  }
+  .nav-zone {
+    position: fixed;
+    top: 0; bottom: 0;
+    width: 12%;
+    cursor: pointer;
+    z-index: 50;
+  }
+  .nav-zone.left  { left: 0; }
+  .nav-zone.right { right: 0; }
+  .nav-hint {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    width: 48px; height: 48px;
+    border: 1px solid rgba(244, 236, 216, 0.25);
+    background: rgba(15, 12, 8, 0.5);
+    color: rgba(244, 236, 216, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Newsreader', serif;
+    font-size: 28px;
+    font-style: italic;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .nav-zone.left  .nav-hint { left: 22px; }
+  .nav-zone.right .nav-hint { right: 22px; }
+  .nav-zone:hover .nav-hint { opacity: 1; }
+
+  @media print {
+    @page { size: 1920px 1080px; margin: 0; }
+    html, body { background: #fff; overflow: visible; height: auto; }
+    #stage { position: static; transform: none !important; box-shadow: none; }
+    .counter, .nav-zone { display: none !important; }
+    .print-stack { display: block; }
+    .print-stack iframe {
+      width: 1920px;
+      height: 1080px;
+      page-break-after: always;
+      display: block;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <iframe id="frame" src="about:blank"></iframe>
+</div>
+
+<div class="nav-zone left"  id="navL"><div class="nav-hint">&lsaquo;</div></div>
+<div class="nav-zone right" id="navR"><div class="nav-hint">&rsaquo;</div></div>
+<div class="counter" id="counter">1 / 12</div>
+
+<div class="print-stack" id="printStack" style="display:none;"></div>
+
+<script>
+(function () {
+  const W = window.DECK_WIDTH || 1920;
+  const H = window.DECK_HEIGHT || 1080;
+  const deck = window.DECK_MANIFEST || [];
+  const stage = document.getElementById('stage');
+  const frame = document.getElementById('frame');
+  const counter = document.getElementById('counter');
+  const printStack = document.getElementById('printStack');
+  const storageKey = 'ediproof-deck-' + location.pathname;
+  let current = 0;
+
+  stage.style.width  = W + 'px';
+  stage.style.height = H + 'px';
+
+  function fit() {
+    const s = Math.min(window.innerWidth / W, window.innerHeight / H);
+    const x = (window.innerWidth  - W * s) / 2;
+    const y = (window.innerHeight - H * s) / 2;
+    stage.style.transform = `translate(${x}px, ${y}px) scale(${s})`;
+    stage.style.top = '0';
+    stage.style.left = '0';
+  }
+
+  function show(idx) {
+    if (idx < 0 || idx >= deck.length) return;
+    current = idx;
+    frame.src = deck[idx].file;
+    counter.innerHTML = `${String(idx + 1).padStart(2, '0')} / ${String(deck.length).padStart(2, '0')} <span class="label">${deck[idx].label || ''}</span>`;
+    try { localStorage.setItem(storageKey, String(idx)); } catch (_) {}
+    if (location.hash !== '#' + (idx + 1)) {
+      history.replaceState(null, '', '#' + (idx + 1));
+    }
+  }
+
+  function next() { show(Math.min(current + 1, deck.length - 1)); }
+  function prev() { show(Math.max(current - 1, 0)); }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    switch (e.key) {
+      case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); next(); break;
+      case 'ArrowLeft':  case 'PageUp':              e.preventDefault(); prev(); break;
+      case 'Home':                                    e.preventDefault(); show(0); break;
+      case 'End':                                     e.preventDefault(); show(deck.length - 1); break;
+      case 'p': case 'P':                             window.print(); break;
+      default:
+        if (e.key >= '1' && e.key <= '9') {
+          const i = parseInt(e.key, 10) - 1;
+          if (i < deck.length) { e.preventDefault(); show(i); }
+        }
+    }
+  });
+
+  document.getElementById('navL').addEventListener('click', prev);
+  document.getElementById('navR').addEventListener('click', next);
+  window.addEventListener('resize', fit);
+  window.addEventListener('hashchange', () => {
+    const m = location.hash.match(/^#(\d+)$/);
+    if (m) show(parseInt(m[1], 10) - 1);
+  });
+
+  const hashMatch = location.hash.match(/^#(\d+)$/);
+  if (hashMatch) current = Math.min(parseInt(hashMatch[1], 10) - 1, deck.length - 1);
+  else try {
+    const v = parseInt(localStorage.getItem(storageKey), 10);
+    if (!isNaN(v) && v >= 0 && v < deck.length) current = v;
+  } catch (_) {}
+  fit();
+  show(current);
+
+  window.addEventListener('beforeprint', () => {
+    printStack.innerHTML = '';
+    deck.forEach(item => {
+      const f = document.createElement('iframe');
+      f.src = item.file;
+      printStack.appendChild(f);
+    });
+    printStack.style.display = 'block';
+    document.getElementById('stage').style.display = 'none';
+  });
+  window.addEventListener('afterprint', () => {
+    printStack.innerHTML = '';
+    printStack.style.display = 'none';
+    document.getElementById('stage').style.display = '';
+  });
+})();
+</script>
+
+</body>
+</html>
